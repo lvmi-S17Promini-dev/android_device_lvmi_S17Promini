@@ -56,3 +56,28 @@ BOARD_AVB_ENABLE := false
 
 # r3 contexts are preserved for investigation, not included in this build.
 # Use the device-verified runtime relabel workaround in recovery init instead.
+
+# Separate system target; keep the validated recovery product unchanged.
+ifeq ($(TARGET_PRODUCT),lineage_S17Promini_system)
+BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 134217728
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+TARGET_COPY_OUT_ODM := vendor/odm
+TARGET_COPY_OUT_PRODUCT := system/product
+TARGET_COPY_OUT_SYSTEM_EXT := system/system_ext
+BOARD_VNDK_VERSION := current
+BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
+BOARD_USES_METADATA_PARTITION := true
+TARGET_USES_64_BIT_BINDER := true
+USE_XML_AUDIO_POLICY_CONF := 1
+# Verification is disabled for this system-only bring-up image.
+BOARD_AVB_ENABLE := true
+BOARD_AVB_ROLLBACK_INDEX := 0
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+BOARD_AVB_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
+BOARD_AVB_SYSTEM_ALGORITHM := SHA256_RSA2048
+BOARD_AVB_SYSTEM_ROLLBACK_INDEX := 0
+BOARD_AVB_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
+BOARD_AVB_SYSTEM_ADD_HASHTREE_FOOTER_ARGS += --hash_algorithm sha256
+endif

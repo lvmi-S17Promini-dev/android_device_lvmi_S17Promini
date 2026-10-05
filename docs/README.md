@@ -39,3 +39,5 @@
 - [r5 super 标签服务与取证](17-r5-super-service.md)
 
 当前稳定 recovery：r5，已实测自动标签status=ready、chcon成功、fastbootd识别logical system。
+
+- [System-only 首次启动构建目标](18-system-bringup.md)

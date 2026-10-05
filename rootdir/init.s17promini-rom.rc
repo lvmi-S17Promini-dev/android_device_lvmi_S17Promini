@@ -1,0 +1,3 @@
+# Bring-up fallback for stock PowerVR userspace with a replacement system.
+on early-init
+    setprop debug.renderengine.backend gles

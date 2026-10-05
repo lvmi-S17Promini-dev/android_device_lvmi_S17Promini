@@ -13,3 +13,13 @@ m -j8 recoveryimage
 See docs for evidence, testing and unresolved issues.
 
 Current source builds the device-validated r5 recovery: the verified recovery-384 baseline plus a logged super-label helper after coldboot and before fastbootd. r3 contexts and extra r2 UI assets remain excluded. Device boot, root ADB and automatic super labeling for fastbootd are validated. Touch and data decryption remain unresolved. See docs/17-r5-super-service.md.
+
+
+System-only first-boot target:
+
+```bash
+lunch lineage_S17Promini_system-userdebug
+m -j8 systemimage vbmetaimage
+```
+
+This target retains stock boot/vendor on device and folds product/system_ext into system. Full build and device boot are pending; it is not a complete ROM/OTA target. See docs/18-system-bringup.md.
