@@ -12,4 +12,4 @@ m -j8 recoveryimage
 
 See docs for evidence, testing and unresolved issues.
 
-Current source builds the r5 candidate: the verified recovery-384 baseline plus a logged super-label helper after coldboot and before fastbootd. r3 contexts and extra r2 UI assets remain excluded. Build and static checks pass; device validation is pending. See docs/17-r5-super-service.md.
+Current source builds the device-validated r5 recovery: the verified recovery-384 baseline plus a logged super-label helper after coldboot and before fastbootd. r3 contexts and extra r2 UI assets remain excluded. Device boot, root ADB and automatic super labeling for fastbootd are validated. Touch and data decryption remain unresolved. See docs/17-r5-super-service.md.

@@ -39,3 +39,9 @@ Sending/Writing均成功再继续。oneshot执行完服务状态stopped为正常
 r5 编译成功（57秒），init RC 和脚本语法检查通过，完整解包静态检查通过。
 镜像 `artifacts/recovery-r5.img`，20840448 bytes，SHA256 `5a2801235d740ff6d02aae0bd17c5e775e3984bf2b5900a985afa312aa827e43`。
 与已验收384的文件内容/链接/权限比较，只修改 init.recovery.mt6765.rc，新增 system/bin/s17-super-label.sh；kernel、DTB/DTBO、compiled sepolicy、vendor_file_contexts和资源均保持基线。审计清单 `extracted/metadata/recovery-384-vs-r5.json`。实机效果待验证。
+
+## 实机验收通过
+
+用户实测 r5：status=ready；日志时间1.67s，helper为uid=0、context=u:r:recovery:s0；真实super从block_device改为super_block_device，chcon exit=0；进入fastbootd后is-logical:system=yes。未手工chcon，自动修复验收通过。
+
+稳定 recovery 更新为 r5。r3启动回归仍未定位，保持停用。触摸和data解密不在本次修复内；logical分区实际刷写和完整ROM仍需分别验收。

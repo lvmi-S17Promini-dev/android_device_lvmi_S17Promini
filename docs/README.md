@@ -37,3 +37,5 @@
 - [r4 自动 relabel 未生效的排查](16-r4-relabel-review.md)
 
 - [r5 super 标签服务与取证](17-r5-super-service.md)
+
+当前稳定 recovery：r5，已实测自动标签status=ready、chcon成功、fastbootd识别logical system。
