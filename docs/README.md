@@ -35,3 +35,5 @@
 当前最小持久化候选：`artifacts/recovery-r4.img`，以已验收384为基线，仅 init RC 自动 chcon，构建/静态/init检查通过；实机可启动，但自动标签未生效，继续排查。r3保持停用。
 
 - [r4 自动 relabel 未生效的排查](16-r4-relabel-review.md)
+
+- [r5 super 标签服务与取证](17-r5-super-service.md)

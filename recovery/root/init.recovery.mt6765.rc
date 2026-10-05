@@ -9,7 +9,17 @@ on fs
     write /sys/class/udc/musb-hdrc/device/cmode 2
 
 on boot
-    # Proven manually on this device. Change the /dev node label, not super data.
-    # Existing userdebug policy permits init -> su; su is already permissive.
-    exec u:r:su:s0 root root -- /system/bin/chcon u:object_r:super_block_device:s0 /dev/block/mmcblk0p32
+    start s17-super-label
     setprop sys.usb.config adb
+
+# Reapply immediately before USB switches into fastbootd.
+on property:sys.usb.config=fastboot
+    exec_start s17-super-label
+
+service s17-super-label /system/bin/sh /system/bin/s17-super-label.sh
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
