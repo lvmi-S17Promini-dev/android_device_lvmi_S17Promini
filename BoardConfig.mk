@@ -59,6 +59,9 @@ BOARD_AVB_ENABLE := false
 
 # Separate system target; keep the validated recovery product unchanged.
 ifeq ($(TARGET_PRODUCT),lineage_S17Promini_system)
+# Stock vendor defines fuseblk with its own type; omit Lineage's duplicate.
+TARGET_USES_PREBUILT_VENDOR_SEPOLICY := true
+TARGET_HAS_FUSEBLK_SEPOLICY_ON_VENDOR := true
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 134217728
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4

@@ -11,3 +11,5 @@ adb pull /cache/s17-collector-test.log .\collector-test.log
 ```
 
 独立工具已静态编译，无需刷写。当前debug boot镜像未重新制作；程序测试通过也不等于boot早期的同一逻辑一定成功，后续再核对mount namespace/时序。boot/recovery/kernel/vbmeta本轮不改写。
+
+实测补充：test 和早期启动日志均已保存到缓存分区。之前空目录是 /cache 未挂载，以及 shell 在挂载前已进入该目录；挂载后使用绝对路径或重新进入即可看到日志。启动失败原因见 [genfscon 冲突](26-firstboot-genfscon.md)。

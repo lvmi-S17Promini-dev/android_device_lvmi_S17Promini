@@ -41,3 +41,5 @@
 当前稳定 recovery：r5，已实测自动标签status=ready、chcon成功、fastbootd识别logical system。
 
 - [System-only 首次启动构建目标](18-system-bringup.md)
+
+- [首次启动 SELinux genfscon 冲突](26-firstboot-genfscon.md)：cache 日志已定位，DT 使用预编译 vendor 策略兼容开关排除重复 fuseblk 标签。
