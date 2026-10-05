@@ -20,3 +20,5 @@ m -j8 systemimage vbmetaimage
 日志读取注意：collector 独立挂载缓存分区后会卸载。recovery 下若 `/cache` 未挂载，先执行 `mount -t ext4 /dev/block/by-name/cache /cache`；若 shell 原先位于 `/cache`，先 `cd /`，再用绝对路径 `ls /cache`，避免继续列出挂载前目录。
 
 验证：`m -j4 system_ext_sepolicy.cil` 成功；使用实际新生成的 system_ext CIL 与原厂 vendor CIL 进行主机 secilc 合并返回 0。完整 system.img 未重新构建，待用户构建及实机启动验证。
+
+实机结果：用户重新构建刷入后成功开机并进入 LineageOS 系统；扬声器、相机、Wi-Fi 首轮测试正常。此次 genfscon 修复已通过实机启动验证；其他功能、生产 boot 和 OTA 尚待后续验证。

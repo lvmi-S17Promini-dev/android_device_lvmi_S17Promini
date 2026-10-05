@@ -43,3 +43,5 @@
 - [System-only 首次启动构建目标](18-system-bringup.md)
 
 - [首次启动 SELinux genfscon 冲突](26-firstboot-genfscon.md)：cache 日志已定位，DT 使用预编译 vendor 策略兼容开关排除重复 fuseblk 标签。
+
+2026-10-06：system-only LineageOS 19.1 首次成功启动进入系统，用户确认扬声器、相机、Wi-Fi 正常。对应 DT 提交 `4fe5fad`；暂保留当前可启动镜像作为后续调试基线。
