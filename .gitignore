@@ -1,0 +1,6 @@
+# Generated build reports and Python caches.
+/docs/*.log
+/docs/recovery-validation.json
+/docs/built-recovery-header.txt
+__pycache__/
+*.py[cod]

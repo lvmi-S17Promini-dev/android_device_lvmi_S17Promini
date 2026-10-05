@@ -1,0 +1,5 @@
+# Native dynamic-partition container. The physical node is proven by GPT and
+# the device's /dev/block/by-name listing. ueventd must label the target node,
+# since fastbootd's access(W_OK) follows the by-name symlink.
+/dev/block/by-name/super    u:object_r:super_block_device:s0
+/dev/block/mmcblk0p32       u:object_r:super_block_device:s0
