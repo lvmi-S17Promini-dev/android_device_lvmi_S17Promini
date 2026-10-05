@@ -22,3 +22,5 @@ m -j8 systemimage vbmetaimage
 验证：`m -j4 system_ext_sepolicy.cil` 成功；使用实际新生成的 system_ext CIL 与原厂 vendor CIL 进行主机 secilc 合并返回 0。完整 system.img 未重新构建，待用户构建及实机启动验证。
 
 实机结果：用户重新构建刷入后成功开机并进入 LineageOS 系统；扬声器、相机、Wi-Fi 首轮测试正常。此次 genfscon 修复已通过实机启动验证；其他功能、生产 boot 和 OTA 尚待后续验证。
+
+补充实测：蓝牙、麦克风、充电、按键唤醒、Doze 均由用户确认正常。recovery 触摸暂不修复；下一阶段整理 vendor blob 和预装应用，本轮结束后暂停，待用户休息后继续。
