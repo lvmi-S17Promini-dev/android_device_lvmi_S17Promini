@@ -48,3 +48,7 @@ tools/generate-recovery-text.py 默认只生成已验收的五张基本资源。
 内核/DTB/DTBO 和加载地址检查通过。尚未实机启动，不把此结果解释成已经修复 r3 根因。
 
 复验路径：从当前 fastbootd 用 fastboot reboot bootloader，然后 flash recovery-r4.img → reboot recovery；检查 id 和真实 super 标签，接着 adb reboot fastboot，再查 is-logical:system 与 size，验证新一次启动也能自动设置标签。无需手工 chcon，也不依赖同次内核生命周期。
+
+## r4 实机结果
+
+启动与 root ADB 可用，但节点仍为 block_device，logical 查询仍失败。自动exec未达到预期，原因待设备RC与dmesg定位。手工标签对照结论不变；见16文档。
