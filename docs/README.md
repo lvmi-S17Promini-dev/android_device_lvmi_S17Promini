@@ -61,3 +61,6 @@
 - [展开 vendor blob 与按文件构建](32-expanded-vendor.md)：proprietary/vendor 文件树及 stock 元数据已导出，新 ext4 从文件构建；完整内容/权限/标签/链接验证通过，待实机测试。
 
 展开 blob 重建的 vendor 已实机通过：用户确认 RIL、Wi-Fi、相机、声音、蓝牙全部正常。基线 vendor-expanded-r1-validated；下一阶段处理正常 boot 和非 A/B 动态分区安装 zip。
+
+- [正常 boot 与调试 ADB](33-normal-boot.md)：无 collector，stock kernel/DTB/ramdisk 对照通过；待实机启动。
+- [首版全量安装 zip](34-full-install-zip.md)：m s17-installzip，原厂 LP 布局上更新 system/vendor/boot/vbmeta/r5 recovery；构建通过，待 sideload 验证。
