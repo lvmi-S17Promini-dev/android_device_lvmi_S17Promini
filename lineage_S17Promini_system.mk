@@ -1,10 +1,11 @@
-# System-only first-boot target; retain the original boot and vendor on device.
+# System bring-up target with original boot and a cleaned stock vendor image.
 # Let Lineage select ro.adb.secure=0 without adding a duplicate property.
 ifneq ($(filter userdebug eng,$(TARGET_BUILD_VARIANT)),)
 WITH_ADB_INSECURE := true
 endif
 $(call inherit-product, device/lvmi/S17Promini/lineage_S17Promini.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_release.mk)
+$(call inherit-product, vendor/lvmi/S17Promini/S17Promini-vendor.mk)
 
 PRODUCT_NAME := lineage_S17Promini_system
 PRODUCT_SHIPPING_API_LEVEL := 31

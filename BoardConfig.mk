@@ -57,7 +57,7 @@ BOARD_AVB_ENABLE := false
 # r3 contexts are preserved for investigation, not included in this build.
 # Use the device-verified runtime relabel workaround in recovery init instead.
 
-# Separate system target; keep the validated recovery product unchanged.
+# System bring-up and cleaned prebuilt vendor; retain the recovery product.
 ifeq ($(TARGET_PRODUCT),lineage_S17Promini_system)
 # Stock vendor defines fuseblk with its own type; omit Lineage's duplicate.
 TARGET_USES_PREBUILT_VENDOR_SEPOLICY := true
@@ -65,6 +65,7 @@ TARGET_HAS_FUSEBLK_SEPOLICY_ON_VENDOR := true
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 134217728
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+include vendor/lvmi/S17Promini/BoardConfigVendor.mk
 TARGET_COPY_OUT_VENDOR := vendor
 TARGET_COPY_OUT_ODM := vendor/odm
 TARGET_COPY_OUT_PRODUCT := system/product

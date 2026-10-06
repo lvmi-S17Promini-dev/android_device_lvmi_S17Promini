@@ -53,3 +53,5 @@
 - [移除 recovery 恢复组件](29-disable-recovery-restore.md)：删掉服务、脚本及 patch 文件；原厂未实际恢复的用户观察保留。
 
 - [尽早开启免授权 ADB](30-early-debug-adb.md)：调试产品 ro.adb.secure=0，post-fs 请求启动 adbd，并处理旧 USB-off 持久值；需重建 system 实测。
+
+- [清理版 prebuilt vendor 构建](31-prebuilt-vendor-build.md)：原镜像重打包，保留 stock 元数据/HAL/策略，接入 m vendorimage；待实机测试。
