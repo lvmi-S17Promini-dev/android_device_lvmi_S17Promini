@@ -1,7 +1,10 @@
 # S17Promini LineageOS 19.1 移植记录
 
-阶段顺序：原厂镜像分析 → 预编译内核 recovery → 实机 fastboot boot / ADB 验证 → ROM → 非 A/B OTA zip。
-当前 recovery 已编译并通过静态检查，`artifacts/recovery-r3.img` 已报告启动失败，停止使用；当前循环重启先通过 BROM 回写原厂 `stock_imgs/recovery.bin`；稳定后再用已验证的 `artifacts/recovery-384.img`，已通过启动/root ADB 实测的是 `artifacts/recovery-384.img`，旧 `artifacts/recovery.img` 保留。用户实测自编与原厂镜像均无法 fastboot boot，随后回到原厂系统；用户已确认 fastboot reboot recovery 能进入原厂 recovery，用户已反馈自编 recovery 从独立分区启动、显示正常；root ADB 与物理分区节点已验证，触摸无原始事件；fastbootd 的 super 标签问题正在处理。未进行分区刷写，自编 recovery 实机启动与显示已通过；root ADB、USB adb、SELinux Enforcing 已由日志验证；触摸不可用，fastbootd 已连接，但 logical system 查询失败；运行时 chcon 已确认 super 标签是 logical 查询失败的原因；r3 启动失败仍未定位，r4 以已验收基线持久化运行时命令。
+当前已验证基线：LineageOS 19.1 system、原厂 prebuilt kernel/first-stage ramdisk 的正常 boot、r5 recovery、从展开 blob 重建的清理版 vendor，以及非 A/B 全量安装 zip r3。用户确认 recovery 安装完成、开机成功、基本功能正常，调试 ADB 符合需求。Git 标记 `lineage-r3-validated`；recovery 触摸暂缓，安装 zip r1/r2 停用。
+
+构建：`lunch lineage_S17Promini_system-userdebug` 后 `m -j8 s17-installzip`。已验证安装包位于工作目录 `artifacts/rom-install-r3/lineage-19.1-S17Promini-r3.zip`；该目标仍为自定义全量安装包，增量 OTA/标准 target-files 尚未接入。
+
+以下保留各阶段步骤与问题记录：
 
 - [原机与分区证据](01-stock.md)
 - [移植步骤与问题](02-porting.md)
@@ -32,7 +35,7 @@
 
 - [super 标签实机确认与 r4 控制变量](15-super-label-confirmed.md)
 
-当前最小持久化候选：`artifacts/recovery-r4.img`，以已验收384为基线，仅 init RC 自动 chcon，构建/静态/init检查通过；实机可启动，但自动标签未生效，继续排查。r3保持停用。
+历史 r4 候选：`artifacts/recovery-r4.img`，以已验收384为基线，仅 init RC 自动 chcon，构建/静态/init检查通过；实机可启动，但自动标签未生效，继续排查。r3保持停用。
 
 - [r4 自动 relabel 未生效的排查](16-r4-relabel-review.md)
 

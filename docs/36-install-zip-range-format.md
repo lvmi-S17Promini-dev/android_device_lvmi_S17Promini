@@ -13,3 +13,5 @@ r3 保存到 artifacts/rom-install-r3/lineage-19.1-S17Promini-r3.zip；r2 停用
 验证：m s17-installzip 成功；r3 两处 CSV 参数满足 native parser 的计数/边界要求，并与 r2 的原 care_map 范围逐项一致，预期 SHA1 未变；镜像输入、LP 操作和 transfer.list 与 r2 一致。整体 CMS 签名校验通过。SHA256 2264bb9065710c1fc33311488785afe727e3f9dc64b819e67451c0952c6de0ff。待实机重试。
 
 实机结果：用户确认 r3 安装已完成。按安装脚本可确认 LP 更新、system/vendor block 写入及 SHA 校验、recovery/boot/vbmeta 写入均已走通。本记录仅验收安装流程，包后重启、数据保留和免授权 ADB 的实际表现待用户继续验证。对应 DT 提交 cbe1734，标记 install-zip-r3-validated；r1/r2 保留排障记录，停止使用。
+
+最终实机验收：用户确认 r3 安装后开机成功，基本功能测试正常，调试 ADB 符合需求。未额外推断未授权主机的具体测试方式。将这版标记为 lineage-r3-validated，作为当前可用移植基线；recovery 触摸继续按用户要求暂缓。
