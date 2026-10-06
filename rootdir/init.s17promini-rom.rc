@@ -2,6 +2,15 @@
 on early-init
     setprop debug.renderengine.backend gles
 
+# The stock system's kpoc_charger is absent from Lineage. The platform
+# on-charger action starts this class alongside the stock vendor health HAL.
+service charger /system/bin/charger
+    class charger
+    user root
+    group root system wakelock input graphics
+    capabilities SYS_BOOT SYS_TTY_CONFIG BLOCK_SUSPEND
+    file /dev/kmsg w
+
 # Debug USB setup before the stock vendor's late on-boot defaults.
 on init && property:ro.debuggable=1
     setprop sys.usb.configfs 1
