@@ -17,6 +17,7 @@ sys.path.insert(0, str(ANDROID / "build/make/tools/releasetools"))
 import common
 import sparse_img
 import blockimgdiff
+from rangelib import RangeSet
 
 
 def sha256(path):
@@ -71,9 +72,13 @@ def main():
                                                disable_imgdiff=True).Compute(prefix)
                     for extension in ("transfer.list", "new.dat", "patch.dat"):
                         package.write(prefix + "." + extension, name + "." + extension)
+                    # Updater consumes count,start,end CSV, not the display format.
+                    verify_ranges = image.care_map.to_string_raw()
+                    if RangeSet.parse_raw(verify_ranges) != image.care_map:
+                        raise ValueError("Invalid verification ranges")
                     script += [f'ui_print("Writing {name}");',
                         f'assert(block_image_update(map_partition("{name}"), package_extract_file("{name}.transfer.list"), "{name}.new.dat", "{name}.patch.dat"));',
-                        f'assert(range_sha1(map_partition("{name}"), "{image.care_map.to_string()}") == "{image.TotalSha1()}");',
+                        f'assert(range_sha1(map_partition("{name}"), "{verify_ranges}") == "{image.TotalSha1()}");',
                         f'unmap_partition("{name}");']
                 # Product is deliberately preserved; require the known main group and LP names.
                 if sizes["system"] + sizes["vendor"] + 204660736 > 7132241920:
