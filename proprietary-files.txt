@@ -69,7 +69,6 @@ vendor/bin/hw/vendor.mediatek.hardware.pq@2.2-service
 vendor/bin/hw/vtservice_hidl
 vendor/bin/hw/wpa_supplicant
 vendor/bin/init.insmod.sh
-vendor/bin/install-recovery.sh
 vendor/bin/ipsec_mon
 vendor/bin/jpegtool
 vendor/bin/lbs_hidl_service
@@ -375,7 +374,6 @@ vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-init.rc
 vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc
 vendor/etc/init/vendor.mediatek.hardware.nvram@1.1-sevice.rc
 vendor/etc/init/vendor.mediatek.hardware.pq@2.2-service.rc
-vendor/etc/init/vendor_flash_recovery.rc
 vendor/etc/init/vibrator-mtk-default.rc
 vendor/etc/init/vndservicemanager.rc
 vendor/etc/init/volte_clientapi_ua.rc
@@ -1894,7 +1892,6 @@ vendor/res/sound/testpattern1.wav
 
 # root
 vendor/build.prop
-vendor/recovery-from-boot.p
 vendor/ro.prop
 vendor/rw.prop
 
