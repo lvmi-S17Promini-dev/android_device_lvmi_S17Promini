@@ -11,3 +11,5 @@ build/make 补丁删除全部 prebuilt recovery 分支及 target-files 拷贝支
 正式命令不变：lunch lineage_S17Promini-userdebug; m -j8 bacon。源码生成 recovery 尚未实机启动验证；用户上一版正式包已实测正常，原包保留作为对照。本轮不修改 vendor blob 或要求重做保留 data/清 data 两条安装测试。
 
 验证：m -j8 bacon 成功；target-files/OTA 使用源码生成的 recovery，OTA 的 recovery 与 target-files 镜像完全一致，kernel/DTB 和 recovery 可执行文件/init/super label/fstab/UI 与原生构建对照通过。完整签名检查通过。生成物在 artifacts/rom-generated-recovery，recovery SHA256 5d068406de3f86a98a70ac6d906fd57708f1d2b6d5a16ba538a86c80e85e159d，OTA SHA256 d303be0055da747c535d0b60b53d76e5a37989cf725d6dc868813eba0331f45d。框架提交 e5d5038e3 删除 prebuilt recovery 支持。实机启动待用户验证。
+
+实机验收：用户确认本轮源码生成 recovery 测试正常。标记 generated-recovery-validated，正式 ROM 使用源码生成 recovery 的方案已通过恢复环境实测。未额外推断本轮整包重刷或 recovery 触摸测试；触摸仍按先前要求暂缓。
