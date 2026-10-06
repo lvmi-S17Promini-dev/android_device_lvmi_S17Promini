@@ -84,4 +84,10 @@ BOARD_AVB_SYSTEM_ALGORITHM := SHA256_RSA2048
 BOARD_AVB_SYSTEM_ROLLBACK_INDEX := 0
 BOARD_AVB_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
 BOARD_AVB_SYSTEM_ADD_HASHTREE_FOOTER_ARGS += --hash_algorithm sha256
+# Keep the tested stock first-stage init/fstab; omit the diagnostic PID1 wrapper.
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 buildvariant=user
+BOARD_MKBOOTIMG_ARGS += --ramdisk $(DEVICE_PATH)/prebuilt/boot-ramdisk.img
+BOARD_MKBOOTIMG_ARGS += --os_version 12.0.0 --os_patch_level 2024-03
+BOARD_MKBOOTIMG_ARGS += --cmdline "bootopt=64S3,32N2,64N2 buildvariant=user"
+BOOTIMAGE_EXTRA_DEPS += $(DEVICE_PATH)/prebuilt/boot-ramdisk.img
 endif
