@@ -58,13 +58,14 @@ BOARD_AVB_ENABLE := false
 # Use the device-verified runtime relabel workaround in recovery init instead.
 
 # System bring-up with stock vendor blobs; retain the recovery product.
-ifeq ($(TARGET_PRODUCT),lineage_S17Promini_system)
+ifeq ($(TARGET_PRODUCT),lineage_S17Promini)
 # Stock vendor defines fuseblk with its own type; omit Lineage's duplicate.
 TARGET_USES_PREBUILT_VENDOR_SEPOLICY := true
 TARGET_HAS_FUSEBLK_SEPOLICY_ON_VENDOR := true
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 134217728
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_VENDORIMAGE_PARTITION_SIZE := 1427996672
 include vendor/lvmi/S17Promini/BoardConfigVendor.mk
 TARGET_COPY_OUT_VENDOR := vendor
 TARGET_COPY_OUT_ODM := vendor/odm
@@ -74,6 +75,18 @@ BOARD_VNDK_VERSION := current
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 BOARD_USES_METADATA_PARTITION := true
 TARGET_USES_64_BIT_BINDER := true
+BOARD_MAIN_PARTITION_LIST := system vendor
+BOARD_COPY_BOOT_IMAGE_TO_TARGET_FILES := true
+BOARD_PREBUILT_RECOVERYIMAGE := $(DEVICE_PATH)/prebuilt/recovery.img
+BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
+BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA2048
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 0
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 2
+BOARD_PREBUILT_VENDOR_DIR := vendor/lvmi/S17Promini/proprietary/vendor
+BOARD_PREBUILT_VENDOR_FS_CONFIG := $(DEVICE_PATH)/vendor-config/fs_config
+BOARD_PREBUILT_VENDOR_MAP := $(OUT_DIR)/target/product/S17Promini/obj/PACKAGING/s17_vendor_intermediates/vendor.map
+TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 USE_XML_AUDIO_POLICY_CONF := 1
 # Verification is disabled for this system-only bring-up image.
 BOARD_AVB_ENABLE := true

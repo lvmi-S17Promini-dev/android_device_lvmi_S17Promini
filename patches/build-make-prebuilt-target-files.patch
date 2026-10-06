@@ -1,0 +1,76 @@
+diff --git a/core/Makefile b/core/Makefile
+index fc4cbd38e..27efa4fcc 100644
+--- a/core/Makefile
++++ b/core/Makefile
+@@ -2329,9 +2329,21 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(recoveryimage-deps)
+ endif # BOARD_USES_RECOVERY_AS_BOOT
+ 
+ ifndef BOARD_CUSTOM_BOOTIMG_MK
++ifdef BOARD_PREBUILT_RECOVERYIMAGE
++$(INSTALLED_RECOVERYIMAGE_TARGET): $(BOARD_PREBUILT_RECOVERYIMAGE) $(recoveryimage-deps) $(BOARD_AVB_RECOVERY_KEY_PATH)
++	$(call pretty,"Prebuilt recovery image: $@")
++	cp $(BOARD_PREBUILT_RECOVERYIMAGE) $@
++ifeq ($(BOARD_AVB_ENABLE),true)
++	$(AVBTOOL) add_hash_footer --image $@ --partition_size $(BOARD_RECOVERYIMAGE_PARTITION_SIZE) \
++	    --partition_name recovery $(INTERNAL_AVB_RECOVERY_SIGNING_ARGS) $(BOARD_AVB_RECOVERY_ADD_HASH_FOOTER_ARGS)
++endif
++	mkdir -p $(TARGET_RECOVERY_ROOT_OUT)/system/etc
++	$(foreach item,$(recovery_fstab),cp -f $(item) $(TARGET_RECOVERY_ROOT_OUT)/system/etc/recovery.fstab;)
++else
+ $(INSTALLED_RECOVERYIMAGE_TARGET): $(recoveryimage-deps) $(RECOVERYIMAGE_EXTRA_DEPS)
+ 	$(call build-recoveryimage-target, $@, \
+ 	  $(if $(filter true, $(BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE)),, $(recovery_kernel)))
++endif
+ else
+ INTERNAL_RECOVERYIMAGE_ARGS += --kernel $(recovery_kernel)
+ endif # BOARD_CUSTOM_BOOTIMG_MK
+@@ -4742,6 +4754,7 @@ $(BUILT_TARGET_FILES_PACKAGE): PRIVATE_OTA_TOOLS := $(built_ota_tools)
+ 
+ tool_extension := $(wildcard $(tool_extensions)/releasetools.py)
+ $(BUILT_TARGET_FILES_PACKAGE): PRIVATE_TOOL_EXTENSION := $(tool_extension)
++$(BUILT_TARGET_FILES_PACKAGE): $(tool_extension)
+ 
+ ifeq ($(AB_OTA_UPDATER),true)
+ updater_dep := system/update_engine/update_engine.conf
+@@ -4908,7 +4921,7 @@ endif
+ ifdef BUILDING_VENDOR_IMAGE
+   $(BUILT_TARGET_FILES_PACKAGE): $(INTERNAL_VENDORIMAGE_FILES)
+ else ifdef BOARD_PREBUILT_VENDORIMAGE
+-  $(BUILT_TARGET_FILES_PACKAGE): $(INSTALLED_VENDORIMAGE_TARGET)
++  $(BUILT_TARGET_FILES_PACKAGE): $(INSTALLED_VENDORIMAGE_TARGET) $(BOARD_PREBUILT_VENDOR_MAP)
+ endif
+ 
+ ifdef BUILDING_PRODUCT_IMAGE
+@@ -5136,6 +5149,9 @@ ifdef BUILDING_VENDOR_IMAGE
+ 	@# Contents of the vendor image
+ 	$(hide) $(call package_files-copy-root, \
+ 	    $(TARGET_OUT_VENDOR),$(zip_root)/VENDOR)
++else ifdef BOARD_PREBUILT_VENDOR_DIR
++	$(hide) $(call package_files-copy-root, \
++	    $(BOARD_PREBUILT_VENDOR_DIR),$(zip_root)/VENDOR)
+ endif
+ ifdef BUILDING_PRODUCT_IMAGE
+ 	@# Contents of the product image
+@@ -5250,6 +5266,13 @@ endif
+ ifdef BOARD_PREBUILT_VENDORIMAGE
+ 	$(hide) mkdir -p $(zip_root)/IMAGES
+ 	$(hide) cp $(INSTALLED_VENDORIMAGE_TARGET) $(zip_root)/IMAGES/
++ifdef BOARD_PREBUILT_VENDOR_MAP
++	$(hide) cp $(BOARD_PREBUILT_VENDOR_MAP) $(zip_root)/IMAGES/vendor.map
++endif
++endif
++ifdef BOARD_PREBUILT_RECOVERYIMAGE
++	$(hide) mkdir -p $(zip_root)/IMAGES
++	$(hide) cp $(INSTALLED_RECOVERYIMAGE_TARGET) $(zip_root)/IMAGES/
+ endif
+ ifdef BOARD_PREBUILT_PRODUCTIMAGE
+ 	$(hide) mkdir -p $(zip_root)/IMAGES
+@@ -5311,6 +5334,8 @@ ifdef BUILDING_SYSTEM_IMAGE
+ endif
+ ifdef BUILDING_VENDOR_IMAGE
+ 	$(hide) $(call fs_config,$(zip_root)/VENDOR,vendor/) > $(zip_root)/META/vendor_filesystem_config.txt
++else ifdef BOARD_PREBUILT_VENDOR_FS_CONFIG
++	$(hide) cp $(BOARD_PREBUILT_VENDOR_FS_CONFIG) $(zip_root)/META/vendor_filesystem_config.txt
+ endif
+ ifdef BUILDING_PRODUCT_IMAGE
+ 	$(hide) $(call fs_config,$(zip_root)/PRODUCT,product/) > $(zip_root)/META/product_filesystem_config.txt

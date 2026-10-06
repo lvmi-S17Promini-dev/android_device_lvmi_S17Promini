@@ -10,4 +10,5 @@ product /product ext4 ro wait,logical
 /dev/block/by-name/para /misc emmc defaults defaults
 /dev/block/by-name/boot /boot emmc defaults defaults
 /dev/block/by-name/recovery /recovery emmc defaults defaults
+/dev/block/by-name/vbmeta /vbmeta emmc defaults defaults
 /dev/block/by-name/super /super emmc defaults defaults
