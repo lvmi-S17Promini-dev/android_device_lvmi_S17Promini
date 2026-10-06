@@ -44,3 +44,5 @@ product/system_ext 仍融合在 system，GSI skip_mount 配置沿用。原先独
 标准 non-A/B OTA 原本依赖启动时自动恢复 recovery，而本机 vendor 已删除该组件，因此 FullOTA_InstallEnd 直接写 recovery.img 和 vbmeta.img。ROM recovery 的 kernel/ramdisk/DTB 启动内容保持 r5，仅补齐 32MiB 和 AVB footer；不重复安装路径实测。
 
 最终验证：m -j8 bacon 成功，正式 OTA 为 lineage-19.1-20261006-UNOFFICIAL-S17Promini.zip，大小 1009914093 bytes，SHA256 4fbb93a89506167eb0d58e832926007b8c68e47f2be2d5898c99ac8ee553f220。target-files 位于 /home/dengxh/android3/lineage/out/target/product/S17Promini/obj/PACKAGING/target_files_intermediates/lineage_S17Promini-target_files-eng.dengxh.zip。整包签名使用官方 check_ota_package_signature 工具校验通过；meta、vendor.map、VINTF、boot 启动内容及 r5 recovery payload 对照通过；安装脚本更新 system/vendor/boot/recovery/vbmeta，没有 format data/cache。框架补丁提交 0aea4fc49，DT 保存完整 patch。新标准 OTA 不重复实机安装路径测试，原 r3 实机基线保留。
+
+用户实机反馈：lineage-19.1-20261006-UNOFFICIAL-S17Promini.zip 已刷入，没有任何问题。按该反馈记录标准包实机正常；用户未提供测试包 SHA256，构建产物校验值独立记录在上文。保留 data 升级、清 data 安装此前均已由用户验收，本轮未要求重复。正式 ROM/recovery 目标和标准 target-files/m bacon 接入完成。

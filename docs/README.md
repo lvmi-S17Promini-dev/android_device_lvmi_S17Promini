@@ -2,7 +2,7 @@
 
 当前已验证基线：LineageOS 19.1 system、原厂 prebuilt kernel/first-stage ramdisk 的正常 boot、r5 recovery、从展开 blob 重建的清理版 vendor，以及非 A/B 全量安装 zip r3。用户确认 recovery 安装完成、开机成功、基本功能正常，调试 ADB 符合需求。Git 标记 `lineage-r3-validated`；recovery 触摸暂缓，安装 zip r1/r2 停用。
 
-正式构建：`lunch lineage_S17Promini-userdebug` 后 `m -j8 bacon`；独立 recovery：`lunch lineage_S17Promini_recovery-userdebug` 后 `m recoveryimage`。已验证安装包位于工作目录 `artifacts/rom-install-r3/lineage-19.1-S17Promini-r3.zip`；原 r3 保留作为已验证基线；标准 target-files/全量 OTA 已接入并构建通过，详见 37 号文档。增量 OTA 本轮未处理。
+正式构建：`lunch lineage_S17Promini-userdebug` 后 `m -j8 bacon`；独立 recovery：`lunch lineage_S17Promini_recovery-userdebug` 后 `m recoveryimage`。已验证安装包位于工作目录 `artifacts/rom-install-r3/lineage-19.1-S17Promini-r3.zip`；原 r3 保留作为已验证基线；标准 target-files/全量 OTA 已接入、构建通过，用户确认正式包刷入正常，详见 37 号文档。增量 OTA 本轮未处理。
 
 以下保留各阶段步骤与问题记录：
 
