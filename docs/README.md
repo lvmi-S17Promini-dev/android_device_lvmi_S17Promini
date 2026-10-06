@@ -85,3 +85,9 @@
 - [BoardConfig 分组整理](39-boardconfig-layout.md)：公共配置与 ROM 配置分开，按功能分组；两目标求值前后完全一致。
 
 - [产品 makefile 格式整理](40-product-mk-layout.md)：四个产品/公共配置按功能分组，继承顺序与两个目标的求值保持一致。
+
+- [Lineage 关机充电](42-lineage-charger.md)：启动现有 charger，恢复充电动画。
+- [充电模式调试 ADB](43-charger-debug-adb.md)：复用源码构建的 recovery adbd，绕过正常 APEX 激活依赖。
+- [背光排查](44-charger-backlight-debug.md)：区分 panel active/suspend 后写入亮度的效果。
+- [背光控制顺序](45-charger-backlight-order.md)：息屏前关闭背光、唤醒后恢复，附 system/core 补丁。
+- [背光文件权限 r4](46-charger-backlight-dac.md)：补 charger 路径的 0664 权限；临时 chmod 灭灯已实测，用户反馈当前基本可用并要求提交。

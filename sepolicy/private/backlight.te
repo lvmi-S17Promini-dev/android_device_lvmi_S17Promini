@@ -1,0 +1,8 @@
+# Only the confirmed LCD brightness file receives this type.
+type sysfs_s17_backlight, fs_type, sysfs_type;
+allow charger sysfs_s17_backlight:file rw_file_perms;
+
+# Preserve normal Android's vendor light HAL and stock init ownership setup.
+allow hal_light_server sysfs_s17_backlight:file rw_file_perms;
+allow vendor_init sysfs_s17_backlight:file setattr;
+allow init sysfs_s17_backlight:file setattr;

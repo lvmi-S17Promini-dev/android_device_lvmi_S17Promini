@@ -1,0 +1,115 @@
+diff --git a/healthd/healthd_draw.cpp b/healthd/healthd_draw.cpp
+index 50eee198f..709cf95a2 100644
+--- a/healthd/healthd_draw.cpp
++++ b/healthd/healthd_draw.cpp
+@@ -14,10 +14,17 @@
+  * limitations under the License.
+  */
+
++#include <android-base/file.h>
++#include <android-base/parseint.h>
+ #include <android-base/stringprintf.h>
++#include <android-base/strings.h>
+ #include <batteryservice/BatteryService.h>
+ #include <cutils/klog.h>
+
++#include <cerrno>
++#include <cstdlib>
++#include <cstring>
++
+ #include "charger.sysprop.h"
+ #include "healthd_draw.h"
+
+@@ -55,6 +62,19 @@ HealthdDraw::HealthdDraw(animation* anim)
+     }
+
+     graphics_available = true;
++
++    if (const char* path = std::getenv("CHARGER_BACKLIGHT_PATH")) {
++        backlight_path_ = path;
++        if (const char* brightness = std::getenv("CHARGER_BACKLIGHT_BRIGHTNESS")) {
++            int value;
++            if (android::base::ParseInt(brightness, &value) && value > 0) {
++                backlight_brightness_ = value;
++            }
++        }
++        remember_backlight_brightness();
++        set_backlight_brightness(backlight_brightness_);
++    }
++
+     sys_font = gr_sys_font();
+     if (sys_font == nullptr) {
+         LOGW("No system font, screen fallback text not available\n");
+@@ -93,7 +113,37 @@ void HealthdDraw::redraw_screen(const animation* batt_anim, GRSurface* surf_unkn
+
+ void HealthdDraw::blank_screen(bool blank) {
+     if (!graphics_available) return;
++    if (blank) {
++        remember_backlight_brightness();
++        // Write while the display/PWM clocks are still active. Writing after
++        // FB_BLANK_POWERDOWN can update the cached level without turning off
++        // the physical backlight on some panels.
++        set_backlight_brightness(0);
++    }
+     gr_fb_blank(blank);
++    if (!blank) {
++        set_backlight_brightness(backlight_brightness_);
++    }
++}
++
++void HealthdDraw::remember_backlight_brightness() {
++    if (backlight_path_.empty()) return;
++    std::string value;
++    int brightness;
++    if (android::base::ReadFileToString(backlight_path_, &value) &&
++        android::base::ParseInt(android::base::Trim(value), &brightness) && brightness > 0) {
++        backlight_brightness_ = brightness;
++    }
++}
++
++void HealthdDraw::set_backlight_brightness(int brightness) {
++    if (backlight_path_.empty()) return;
++    if (!android::base::WriteStringToFile(std::to_string(brightness), backlight_path_)) {
++        LOGE("backlight: cannot write %d to %s: %s\n", brightness, backlight_path_.c_str(),
++             std::strerror(errno));
++        return;
++    }
++    KLOG_INFO("charger", "backlight: brightness=%d\n", brightness);
+ }
+
+ void HealthdDraw::clear_screen(void) {
+diff --git a/healthd/healthd_draw.h b/healthd/healthd_draw.h
+index 7c847bdbf..9cba203b6 100644
+--- a/healthd/healthd_draw.h
++++ b/healthd/healthd_draw.h
+@@ -20,6 +20,8 @@
+ #include <linux/input.h>
+ #include <minui/minui.h>
+
++#include <string>
++
+ #include "animation.h"
+
+ using namespace android;
+@@ -37,6 +39,9 @@ class HealthdDraw {
+   virtual void blank_screen(bool blank);
+
+  protected:
++  void remember_backlight_brightness();
++  void set_backlight_brightness(int brightness);
++
+   virtual void clear_screen();
+
+   // returns the last y-offset of where the surface ends.
+@@ -76,6 +81,11 @@ class HealthdDraw {
+
+   // true if minui init'ed OK, false if minui init failed
+   bool graphics_available;
++
++  // Optional LED-class backlight control for panels whose framebuffer blank
++  // does not turn off the backlight. Configured by the charger service only.
++  std::string backlight_path_;
++  int backlight_brightness_ = 128;
+ };
+
+ #endif  // HEALTHD_DRAW_H

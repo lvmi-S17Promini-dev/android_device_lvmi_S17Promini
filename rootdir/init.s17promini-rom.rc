@@ -2,10 +2,18 @@
 on early-init
     setprop debug.renderengine.backend gles
 
+# Stock vendor owns this file as system:system 0644. Charger has the system
+# group but deliberately restricted capabilities, so grant group write before
+# class charger starts instead of adding CAP_DAC_OVERRIDE.
+on init && property:ro.bootmode=charger
+    chmod 0664 /sys/class/leds/lcd-backlight/brightness
+
 # The stock system's kpoc_charger is absent from Lineage. The platform
 # on-charger action starts this class alongside the stock vendor health HAL.
 service charger /system/bin/charger
     class charger
+    setenv CHARGER_BACKLIGHT_PATH /sys/class/leds/lcd-backlight/brightness
+    setenv CHARGER_BACKLIGHT_BRIGHTNESS 128
     user root
     group root system wakelock input graphics
     capabilities SYS_BOOT SYS_TTY_CONFIG BLOCK_SUSPEND
