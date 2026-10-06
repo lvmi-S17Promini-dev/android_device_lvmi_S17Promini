@@ -57,7 +57,7 @@ BOARD_AVB_ENABLE := false
 # r3 contexts are preserved for investigation, not included in this build.
 # Use the device-verified runtime relabel workaround in recovery init instead.
 
-# System bring-up and cleaned prebuilt vendor; retain the recovery product.
+# System bring-up with stock vendor blobs; retain the recovery product.
 ifeq ($(TARGET_PRODUCT),lineage_S17Promini_system)
 # Stock vendor defines fuseblk with its own type; omit Lineage's duplicate.
 TARGET_USES_PREBUILT_VENDOR_SEPOLICY := true

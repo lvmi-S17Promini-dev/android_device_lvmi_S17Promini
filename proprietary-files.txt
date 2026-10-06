@@ -1,6 +1,6 @@
 # S17Promini stock vendor blobs (Android 12 / API 31).
 # Bundled standalone apps removed; other source-built replacements are pending.
-# Not yet wired into extraction or vendor-image builds; see docs/28-vendor-apk-pruning.md.
+# Expanded blobs build vendor through generated Android.mk; see docs/32-expanded-vendor.md.
 # Symlinks are recorded separately in proprietary-symlinks.txt.
 
 # app

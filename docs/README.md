@@ -57,3 +57,5 @@
 - [清理版 prebuilt vendor 构建](31-prebuilt-vendor-build.md)：原镜像重打包，保留 stock 元数据/HAL/策略，接入 m vendorimage；待实机测试。
 
 清理版 vendor 实机通过：刷入后清空 data，成功开机、无原厂预装应用、功能测试正常。保留该镜像作为后续逐文件 vendor 构建的对照基线。
+
+- [展开 vendor blob 与按文件构建](32-expanded-vendor.md)：proprietary/vendor 文件树及 stock 元数据已导出，新 ext4 从文件构建；完整内容/权限/标签/链接验证通过，待实机测试。
