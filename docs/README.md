@@ -75,3 +75,5 @@
 安装 zip r3 实机安装成功，标记 install-zip-r3-validated；下一项是安装后重启、数据保留和调试 ADB 验证。
 
 - [正式目标与标准 OTA](37-standard-build-targets.md)：ROM/recovery lunch 分开，标准 target-files/m bacon 接线；用户确认升级和全新安装已通过，本轮不重复实机测试。
+
+- [ROM recovery 改为源码生成](38-generated-recovery.md)：移除固定 r5 blob，单独配置 recovery mkbootimg 参数并使用最新源码输出，构建补丁缩减为 vendor 支持。

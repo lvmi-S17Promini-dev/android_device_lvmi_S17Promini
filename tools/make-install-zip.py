@@ -36,7 +36,7 @@ def main():
     out = args.product_out.resolve()
     output = args.output.resolve()
     inputs = {name: out / (name + ".img") for name in ("system", "vendor", "boot", "vbmeta")}
-    inputs["recovery"] = DEVICE / "prebuilt/recovery.img"
+    inputs["recovery"] = out / "recovery.img"
     updater = out / "obj/EXECUTABLES/updater_intermediates/updater"
     for path in [*inputs.values(), updater]:
         if not path.is_file():

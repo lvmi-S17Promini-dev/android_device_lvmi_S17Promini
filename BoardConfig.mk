@@ -77,7 +77,6 @@ BOARD_USES_METADATA_PARTITION := true
 TARGET_USES_64_BIT_BINDER := true
 BOARD_MAIN_PARTITION_LIST := system vendor
 BOARD_COPY_BOOT_IMAGE_TO_TARGET_FILES := true
-BOARD_PREBUILT_RECOVERYIMAGE := $(DEVICE_PATH)/prebuilt/recovery.img
 BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
 BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA2048
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 0
@@ -102,5 +101,11 @@ BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 buildvariant=user
 BOARD_MKBOOTIMG_ARGS += --ramdisk $(DEVICE_PATH)/prebuilt/boot-ramdisk.img
 BOARD_MKBOOTIMG_ARGS += --os_version 12.0.0 --os_patch_level 2024-03
 BOARD_MKBOOTIMG_ARGS += --cmdline "bootopt=64S3,32N2,64N2 buildvariant=user"
+# Recovery must use its generated ramdisk, not boot's stock first-stage ramdisk.
+BOARD_RECOVERY_MKBOOTIMG_ARGS := --header_version 2
+BOARD_RECOVERY_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+BOARD_RECOVERY_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET) --dtb_offset $(BOARD_DTB_OFFSET)
+BOARD_RECOVERY_MKBOOTIMG_ARGS += --dtb $(DEVICE_PATH)/prebuilt/dtb.img
+BOARD_RECOVERY_MKBOOTIMG_ARGS += --os_version 12.0.0 --os_patch_level 2024-03
 BOOTIMAGE_EXTRA_DEPS += $(DEVICE_PATH)/prebuilt/boot-ramdisk.img
 endif
