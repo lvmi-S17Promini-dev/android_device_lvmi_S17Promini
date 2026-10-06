@@ -68,3 +68,5 @@
 - [安装 zip r2 卸载修复](35-install-zip-unmount.md)：正常 boot 实测成功；r1 在未挂载 /system_root 的裸 unmount 处中止，r2 增加三处挂载判断。
 
 - [安装 zip r3 校验范围编码修复](36-install-zip-range-format.md)：r2 system 写入完成，range_sha1 因人类可读格式触发 CHECK/SIGABRT；改用 raw CSV 编码，保留校验。
+
+安装 zip r3 实机安装成功，标记 install-zip-r3-validated；下一项是安装后重启、数据保留和调试 ADB 验证。
