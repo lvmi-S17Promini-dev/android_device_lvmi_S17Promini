@@ -12,4 +12,4 @@ fastboot flash boot .\boot-normal-r1.img
 fastboot reboot
 ```
 
-单独刷 boot 不会更新 system 内的 ADB 改动；后续安装 zip 会同时更新 system。原诊断 boot-kmsg-debug.img 保留用于排障；当前正常 boot 和 zip 尚未实机验证。
+单独刷 boot 不会更新 system 内的 ADB 改动；后续安装 zip 会同时更新 system。原诊断 boot-kmsg-debug.img 保留用于排障；用户已确认正常 boot 成功启动；zip 首测失败，修复记录见后续文档。

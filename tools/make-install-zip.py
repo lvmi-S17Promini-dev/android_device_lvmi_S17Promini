@@ -54,7 +54,9 @@ def main():
             script = [
                 'ui_print("LineageOS 19.1 - S17Promini full install");',
                 'assert(getprop("ro.product.device") == "S17Promini" || getprop("ro.product.vendor.device") == "S17Promini");',
-                'unmount("/system_root");', 'unmount("/system");', 'unmount("/vendor");',
+                'ifelse(is_mounted("/system_root"), unmount("/system_root"), "");',
+                'ifelse(is_mounted("/system"), unmount("/system"), "");',
+                'ifelse(is_mounted("/vendor"), unmount("/vendor"), "");',
                 'assert(update_dynamic_partitions(package_extract_file("dynamic_partitions_op_list")));',
             ]
             with zipfile.ZipFile(unsigned, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=1,

@@ -64,3 +64,5 @@
 
 - [正常 boot 与调试 ADB](33-normal-boot.md)：无 collector，stock kernel/DTB/ramdisk 对照通过；待实机启动。
 - [首版全量安装 zip](34-full-install-zip.md)：m s17-installzip，原厂 LP 布局上更新 system/vendor/boot/vbmeta/r5 recovery；构建通过，待 sideload 验证。
+
+- [安装 zip r2 卸载修复](35-install-zip-unmount.md)：正常 boot 实测成功；r1 在未挂载 /system_root 的裸 unmount 处中止，r2 增加三处挂载判断。
