@@ -51,3 +51,5 @@
 - [Vendor 预装 APK 清理](28-vendor-apk-pruning.md)：删除 6 个应用及专用库/预优化文件，保留 15 个资源 overlay；手机端待后续 vendor 镜像刷入。
 
 - [移除 recovery 恢复组件](29-disable-recovery-restore.md)：删掉服务、脚本及 patch 文件；原厂未实际恢复的用户观察保留。
+
+- [尽早开启免授权 ADB](30-early-debug-adb.md)：调试产品 ro.adb.secure=0，post-fs 请求启动 adbd，并处理旧 USB-off 持久值；需重建 system 实测。

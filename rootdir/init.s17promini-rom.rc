@@ -1,3 +1,24 @@
 # Bring-up fallback for stock PowerVR userspace with a replacement system.
 on early-init
     setprop debug.renderengine.backend gles
+
+# Debug USB setup before the stock vendor's late on-boot defaults.
+on init && property:ro.debuggable=1
+    setprop sys.usb.configfs 1
+    setprop sys.usb.controller musb-hdrc
+
+# The stock vendor creates the gadget and FunctionFS mount during post-fs.
+# Updatable adbd starts once its APEX is ready; no framework/UI is required.
+on post-fs && property:ro.debuggable=1
+    setprop vendor.usb.controller musb-hdrc
+    setprop vendor.usb.acm_cnt 0
+    setprop vendor.usb.acm_enable 0
+    setprop vendor.usb.pid 0x201C
+    setprop sys.usb.config adb
+    start adbd
+
+# Ignore a previously persisted USB-off setting for this bring-up build.
+on load_persist_props_action && property:ro.debuggable=1
+    setprop persist.sys.usb.config adb
+    setprop sys.usb.config adb
+    start adbd
