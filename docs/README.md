@@ -55,3 +55,5 @@
 - [尽早开启免授权 ADB](30-early-debug-adb.md)：调试产品 ro.adb.secure=0，post-fs 请求启动 adbd，并处理旧 USB-off 持久值；需重建 system 实测。
 
 - [清理版 prebuilt vendor 构建](31-prebuilt-vendor-build.md)：原镜像重打包，保留 stock 元数据/HAL/策略，接入 m vendorimage；待实机测试。
+
+清理版 vendor 实机通过：刷入后清空 data，成功开机、无原厂预装应用、功能测试正常。保留该镜像作为后续逐文件 vendor 构建的对照基线。

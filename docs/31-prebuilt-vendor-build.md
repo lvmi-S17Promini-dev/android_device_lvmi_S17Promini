@@ -38,8 +38,10 @@ fastboot flash vendor .\vendor.img
 fastboot reboot
 ```
 
-刷后复测相机、扬声器、麦克风、Wi-Fi、蓝牙、充电、唤醒；确认 6 个独立预装应用不再由 vendor 安装。已有应用若存在 /data/app 更新副本，删除 vendor 文件不会自动删除该副本。此镜像未实机验证。
+刷后复测相机、扬声器、麦克风、Wi-Fi、蓝牙、充电、唤醒；确认 6 个独立预装应用不再由 vendor 安装。已有应用若存在 /data/app 更新副本，删除 vendor 文件不会自动删除该副本。该镜像现已通过实机验证，结果见下文。
 
 早期免授权 ADB 是上一轮 system 改动，单独刷 vendor 不会启用；需另行 m -j8 systemimage 并刷新的 system.img。当前先只更换 vendor，方便定位问题。
 
 Lineage 构建验证：`m -j4 vendorimage` 成功，输出已复制到 `~/S17Promini_LineageOS/artifacts/vendor-firstboot/vendor.img`，SHA256 与工具报告一致。
+
+实机验证：用户刷入清理版 vendor 后清空 data，成功开机，确认没有原厂预装应用，功能测试正常。未逐项新增测试明细，按用户反馈记录。对应构建 DT 提交 082c729，镜像 SHA256 见上；保存为后续展开 blob、重建 vendor 的对照基线。
