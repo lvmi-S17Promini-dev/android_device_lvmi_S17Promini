@@ -35,6 +35,8 @@ m -j4 vendorimage
 
 从新镜像重新读取全部 inode，核对 UID/GID/mode、SELinux 标签、链接目标；重新导出全部 1875 个文件，逐个比对输入 SHA256；ext4 和 AVB 校验通过。e2fsdroid 特殊处理 lost+found，不从源目录复制该目录，交给 mke2fs 创建后设置标签；该目录元数据同样经过核对。
 
-新 sparse 镜像约 514 MiB，分区展开大小仍为 1427996672 bytes。未实机验证。用 r5 recovery 进入 fastbootd，仅刷 vendor，保留当前能启动的 system/boot/vbmeta，不需要清 data，再复测硬件功能。刷写方法与上一版相同。
+新 sparse 镜像约 514 MiB，分区展开大小仍为 1427996672 bytes。现已通过实机验证，结果见下文。用 r5 recovery 进入 fastbootd，仅刷 vendor，保留当前能启动的 system/boot/vbmeta，不需要清 data，再复测硬件功能。刷写方法与上一版相同。
 
 Lineage 构建验证：m -j4 vendorimage 成功。产物已保存到 ~/S17Promini_LineageOS/artifacts/vendor-expanded-r1/vendor.img；sparse 538035712 bytes，SHA256 7f2411ff41dbaf2dfa7b6a8fa56ebc79baee5ce115908e48b2fb7c30021b4af4，复制后 SHA256 一致。本机需要 e2fsprogs 的 /usr/sbin/debugfs（可通过 S17_DEBUGFS 指定其他绝对路径），以便绕过 Android PATH 工具过滤并校验 inode。脚本兼容构建环境的 Python 3.9。
+
+实机结果：用户刷入 vendor-expanded-r1 后确认 RIL、Wi-Fi、相机、声音、蓝牙全部正常。RIL 测试具体项目未展开记录，不据此推断通话、短信、移动数据或 IMS 已分别验证。对应 DT 提交 6d4cec2，镜像 SHA256 见上。此版本标记为 vendor-expanded-r1-validated，后续正常 boot 和安装 zip 以它为 vendor 基线。

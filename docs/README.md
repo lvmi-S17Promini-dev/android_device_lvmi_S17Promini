@@ -59,3 +59,5 @@
 清理版 vendor 实机通过：刷入后清空 data，成功开机、无原厂预装应用、功能测试正常。保留该镜像作为后续逐文件 vendor 构建的对照基线。
 
 - [展开 vendor blob 与按文件构建](32-expanded-vendor.md)：proprietary/vendor 文件树及 stock 元数据已导出，新 ext4 从文件构建；完整内容/权限/标签/链接验证通过，待实机测试。
+
+展开 blob 重建的 vendor 已实机通过：用户确认 RIL、Wi-Fi、相机、声音、蓝牙全部正常。基线 vendor-expanded-r1-validated；下一阶段处理正常 boot 和非 A/B 动态分区安装 zip。
