@@ -81,3 +81,5 @@
 当前源码生成 recovery 已由用户确认测试正常，标记 generated-recovery-validated；标准 m bacon 和独立 recovery 目标保持当前配置。
 
 - [BoardConfig 分组整理](39-boardconfig-layout.md)：公共配置与 ROM 配置分开，按功能分组；两目标求值前后完全一致。
+
+- [产品 makefile 格式整理](40-product-mk-layout.md)：四个产品/公共配置按功能分组，继承顺序与两个目标的求值保持一致。
