@@ -39,3 +39,5 @@
 清理应用时连同所在目录的专用 lib/oat/odex 一起处理，并核对 vendor 配置对包名的引用；当前未执行删除。HAL、firmware、公共 32/64 位库先保留，再逐项区分可由源码构建的部分。
 
 恢复工作时：先从上述完整基线筛出最终 proprietary-files，生成 extract-files/setup-makefiles 和 vendor 构建配置，再构建 vendor 镜像实机验证。保留 SELinux fuseblk 冲突修复及原厂必要的 MTK 策略。
+
+后续已完成：6 个独立预装应用从解包工作目录及 blob 清单删除，剩余 15 个 overlay 保留。原厂 2050 文件清单可从 Git 提交 8db2a42 查看；当前状态见 [APK 清理记录](28-vendor-apk-pruning.md)。

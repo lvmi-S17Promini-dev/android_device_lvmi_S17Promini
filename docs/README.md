@@ -47,3 +47,5 @@
 2026-10-06：system-only LineageOS 19.1 首次成功启动进入系统，用户确认扬声器、相机、Wi-Fi 正常。对应 DT 提交 `4fe5fad`；暂保留当前可启动镜像作为后续调试基线。
 
 - [Vendor blob 清单与后续清理](27-vendor-blobs.md)：完整原厂文件/符号链接清单已生成，预装 APK 已列出；仅记录，尚未清理或构建 vendor。补充实测蓝牙、麦克风、充电、按键唤醒、Doze 正常，recovery 触摸暂缓。
+
+- [Vendor 预装 APK 清理](28-vendor-apk-pruning.md)：删除 6 个应用及专用库/预优化文件，保留 15 个资源 overlay；手机端待后续 vendor 镜像刷入。
