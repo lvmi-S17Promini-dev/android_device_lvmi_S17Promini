@@ -42,3 +42,10 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # Init
 PRODUCT_COPY_FILES += \
     device/lvmi/S17Promini/rootdir/init.s17promini-rom.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/init.s17promini-rom.rc
+
+# Charger diagnostics must work before the normal adbd APEX is activated.
+ifneq ($(filter userdebug eng,$(TARGET_BUILD_VARIANT)),)
+PRODUCT_PACKAGES += s17-charger-adbd s17-charger-adb-protos
+PRODUCT_COPY_FILES += \
+    device/lvmi/S17Promini/rootdir/init.s17promini-charger-adb.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/init.s17promini-charger-adb.rc
+endif
