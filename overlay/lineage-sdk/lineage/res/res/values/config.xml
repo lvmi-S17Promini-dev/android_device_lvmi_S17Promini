@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Camera (32) + volume rocker (64). -->
+    <integer name="config_deviceHardwareKeys">96</integer>
+    <integer name="config_deviceHardwareWakeKeys">96</integer>
+</resources>

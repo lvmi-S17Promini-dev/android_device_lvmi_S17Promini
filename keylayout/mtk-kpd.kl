@@ -1,0 +1,9 @@
+# Physical keypad mappings from the stock keypad DT and input capabilities.
+# Camera wake also requires enabling Lineage's camera_wake_screen setting.
+key 56    ALT_LEFT
+key 100   ALT_RIGHT
+key 114   VOLUME_DOWN
+key 115   VOLUME_UP
+key 212   CAMERA
+# The physical camera button actually reports KEY_NUMERIC_POUND (0x20b).
+key 523   CAMERA          WAKE
