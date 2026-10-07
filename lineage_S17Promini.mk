@@ -22,7 +22,7 @@ PRODUCT_PACKAGES += \
 # Product identity
 PRODUCT_NAME := lineage_S17Promini
 
-# Expose the physical camera key and its wake option in Lineage button settings.
+# Device overlays: camera key/wake options and the sound vibration controls.
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/mtk-kpd.kl:$(TARGET_COPY_OUT_SYSTEM)/usr/keylayout/mtk-kpd.kl

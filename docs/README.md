@@ -93,3 +93,5 @@
 - [背光文件权限 r4](46-charger-backlight-dac.md)：补 charger 路径的 0664 权限；临时 chmod 灭灯已实测，用户反馈当前基本可用并要求提交。
 
 - [补齐拨号应用](47-dialer.md)
+
+- [振动分类控制入口](48-vibration-controls.md)：声音页面增加分类开关入口，强度调节与全局关闭暂不实现。
