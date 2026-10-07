@@ -14,6 +14,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_release.mk)
 # Inherit vendor blobs
 $(call inherit-product, vendor/lvmi/S17Promini/S17Promini-vendor.mk)
 
+# Telephony
+# common_full_phone supplies messaging and Stk, but not the AOSP Dialer.
+PRODUCT_PACKAGES += \
+    Dialer
+
 # Product identity
 PRODUCT_NAME := lineage_S17Promini
 

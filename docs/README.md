@@ -91,3 +91,5 @@
 - [背光排查](44-charger-backlight-debug.md)：区分 panel active/suspend 后写入亮度的效果。
 - [背光控制顺序](45-charger-backlight-order.md)：息屏前关闭背光、唤醒后恢复，附 system/core 补丁。
 - [背光文件权限 r4](46-charger-backlight-dac.md)：补 charger 路径的 0664 权限；临时 chmod 灭灯已实测，用户反馈当前基本可用并要求提交。
+
+- [补齐拨号应用](47-dialer.md)
