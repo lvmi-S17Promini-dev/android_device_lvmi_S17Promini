@@ -74,6 +74,14 @@ TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 BOARD_INCLUDE_RECOVERY_DTBO := true
 BOARD_PREBUILT_RECOVERY_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/recovery_dtbo.img
 
+# Both products use the built kernel/DTB and a generated recovery ramdisk.
+# Keep boot's stock --ramdisk argument out of the recovery invocation.
+# The build core supplies --dtb from INSTALLED_DTBIMAGE_TARGET.
+BOARD_RECOVERY_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_RECOVERY_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+BOARD_RECOVERY_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET) --dtb_offset $(BOARD_DTB_OFFSET)
+BOARD_RECOVERY_MKBOOTIMG_ARGS += --os_version 12.0.0 --os_patch_level 2024-03
+
 # Verified Boot
 # Standalone recovery is unsigned; ROM enables AVB packaging below.
 BOARD_AVB_ENABLE := false

@@ -74,13 +74,5 @@ BOARD_MKBOOTIMG_ARGS += --os_version 12.0.0 --os_patch_level 2024-03
 BOARD_MKBOOTIMG_ARGS += --cmdline "$(BOARD_KERNEL_CMDLINE)"
 BOOTIMAGE_EXTRA_DEPS += $(DEVICE_PATH)/prebuilt/boot-ramdisk.img
 
-# Recovery image
-# Recovery uses its generated ramdisk, separately from normal boot.
-BOARD_RECOVERY_MKBOOTIMG_ARGS := --header_version 2
-BOARD_RECOVERY_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
-BOARD_RECOVERY_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET) --dtb_offset $(BOARD_DTB_OFFSET)
-BOARD_RECOVERY_MKBOOTIMG_ARGS += --dtb $(DEVICE_PATH)/prebuilt/dtb.img
-BOARD_RECOVERY_MKBOOTIMG_ARGS += --os_version 12.0.0 --os_patch_level 2024-03
-
 # Generated vendor image configuration
 include vendor/lvmi/S17Promini/BoardConfigVendor.mk
