@@ -1,0 +1,5 @@
+cc_binary {
+    name: "s17-bootlog",
+    srcs: ["tools/boot-kmsg-init.c"],
+    cflags: ["-Wall", "-Wextra", "-Werror"],
+}

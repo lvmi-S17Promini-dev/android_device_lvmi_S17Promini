@@ -1,0 +1,25 @@
+# Temporary userdebug/eng bring-up logs; /cache is independent of /data encryption.
+on post-fs && property:ro.debuggable=1
+    mkdir /cache/s17-bootlog 0700 root root
+    start s17-boot-kmsg
+    start s17-boot-logcat
+
+service s17-boot-kmsg /system/bin/s17-bootlog --service
+    class core
+    disabled
+    oneshot
+    user root
+    group root log readproc
+    seclabel u:r:su:s0
+
+service s17-boot-logcat /system/bin/logcat -b all -v threadtime -f /cache/s17-bootlog/logcat.log -r 4096 -n 2
+    class core
+    disabled
+    oneshot
+    user root
+    group root log readproc
+    seclabel u:r:su:s0
+
+on property:sys.boot_completed=1
+    stop s17-boot-kmsg
+    stop s17-boot-logcat
