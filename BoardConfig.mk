@@ -36,14 +36,18 @@ BOARD_TAGS_OFFSET := 0x07808000
 BOARD_DTB_OFFSET := 0x07808000
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 androidboot.hardware=mt6765
 
-# Kernel - prebuilt
-# Stock kernel and MTK DTB table; no source build.
-TARGET_KERNEL_SOURCE := kernel/lvmi/S17Promini
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+# Always build the S17 source kernel and its board DTB.
+TARGET_KERNEL_SOURCE := kernel/lvmi/mt6765
+TARGET_KERNEL_CONFIG := S17Promini_defconfig S17Promini_boot_test.config
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_CLANG_VERSION := r416183b
+TARGET_KERNEL_ADDITIONAL_FLAGS := LLVM_IAS=1 -j8
+KERNEL_LD := LD=$(abspath prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld.bfd)
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_CUSTOM_DTBIMG_MK := $(DEVICE_PATH)/source-kernel-dtb.mk
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET) --dtb_offset $(BOARD_DTB_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --dtb $(DEVICE_PATH)/prebuilt/dtb.img
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072

@@ -61,9 +61,14 @@ BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 2
 # Boot image
 # Preserve the tested stock first-stage init/fstab.
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 buildvariant=user
+# Temporary bring-up settings: keep cpufreq init bypass and debug logging.
+BOARD_KERNEL_CMDLINE += initcall_debug loglevel=8 ignore_loglevel
+BOARD_KERNEL_CMDLINE += initcall_blacklist=_mt_cpufreq_pdrv_init
+BOARD_KERNEL_CMDLINE += enforcing=0 androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE += printk.disable_uart=0 printk.devkmsg=on
 BOARD_MKBOOTIMG_ARGS += --ramdisk $(DEVICE_PATH)/prebuilt/boot-ramdisk.img
 BOARD_MKBOOTIMG_ARGS += --os_version 12.0.0 --os_patch_level 2024-03
-BOARD_MKBOOTIMG_ARGS += --cmdline "bootopt=64S3,32N2,64N2 buildvariant=user"
+BOARD_MKBOOTIMG_ARGS += --cmdline "$(BOARD_KERNEL_CMDLINE)"
 BOOTIMAGE_EXTRA_DEPS += $(DEVICE_PATH)/prebuilt/boot-ramdisk.img
 
 # Recovery image
