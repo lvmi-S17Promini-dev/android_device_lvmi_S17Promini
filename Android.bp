@@ -3,3 +3,10 @@ cc_binary {
     srcs: ["tools/boot-kmsg-init.c"],
     cflags: ["-Wall", "-Wextra", "-Werror"],
 }
+
+cc_binary {
+    name: "s17-rebootlog",
+    srcs: ["tools/reboot-kmsg.c"],
+    static_executable: true,
+    cflags: ["-Wall", "-Wextra", "-Werror"],
+}
