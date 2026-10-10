@@ -2,10 +2,6 @@
 on early-init
     setprop debug.renderengine.backend gles
 
-# Disable the debug serial shell before framework boot; keep ADB available.
-on boot
-    stop console
-
 # Stock vendor owns this file as system:system 0644. Charger has the system
 # group but deliberately restricted capabilities, so grant group write before
 # class charger starts instead of adding CAP_DAC_OVERRIDE.
