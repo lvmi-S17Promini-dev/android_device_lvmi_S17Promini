@@ -49,9 +49,8 @@ PRODUCT_BUILD_CACHE_IMAGE := true
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.sf.lcd_density=180
 
-# Init
-PRODUCT_COPY_FILES += \
-    device/lvmi/S17Promini/rootdir/init.s17promini-rom.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/init.s17promini-rom.rc
+# Device init overrides GSI-only startup scripts in Android.mk.
+PRODUCT_PACKAGES += init.s17promini-rom.rc
 
 # Charger diagnostics must work before the normal adbd APEX is activated.
 ifneq ($(filter userdebug eng,$(TARGET_BUILD_VARIANT)),)

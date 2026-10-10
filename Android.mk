@@ -1,6 +1,18 @@
 LOCAL_PATH := $(call my-dir)
 
 ifeq ($(TARGET_PRODUCT),lineage_S17Promini)
+# Device init owns the boot flow. Keep GSI compatibility libraries without
+# installing the GSI-only version import or unconditional nodef reboot guard.
+include $(CLEAR_VARS)
+LOCAL_MODULE := init.s17promini-rom.rc
+LOCAL_MODULE_CLASS := ETC
+LOCAL_LICENSE_KINDS := legacy_restricted
+LOCAL_LICENSE_CONDITIONS := restricted
+LOCAL_SRC_FILES := rootdir/init.s17promini-rom.rc
+LOCAL_MODULE_RELATIVE_PATH := init
+LOCAL_OVERRIDES_MODULES := init.gsi.rc init.vndk-nodef.rc
+include $(BUILD_PREBUILT)
+
 ifneq ($(filter userdebug eng,$(TARGET_BUILD_VARIANT)),)
 # Package the source-built recovery daemon for use before adbd's APEX is
 # activated. Depend on build outputs rather than checking in another binary.
