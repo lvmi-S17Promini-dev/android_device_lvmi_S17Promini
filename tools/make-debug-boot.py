@@ -3,6 +3,7 @@
 import argparse
 import gzip
 import shlex
+import re
 from pathlib import Path
 import subprocess
 
@@ -13,14 +14,20 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--input', type=Path, help='Base boot image; preserve its kernel, DTB and cmdline')
 parser.add_argument('--output', type=Path, default=WORK / 'artifacts/boot-kmsg-debug.img')
 parser.add_argument('--work-dir', type=Path, default=WORK / 'extracted/boot-kmsg-debug')
+parser.add_argument('--tag', default='r8', help='Marker in cmdline and collector header')
+parser.add_argument('--permissive', action='store_true',
+                    help='Temporary userdebug capture across SELinux policy loading')
 args = parser.parse_args()
+if not re.fullmatch(r'[A-Za-z0-9_.-]+', args.tag):
+    parser.error('tag must contain only letters, digits, dot, underscore or hyphen')
 OUT = args.work_dir
 OUT.mkdir(parents=True, exist_ok=True)
 wrapper = OUT / 'init-wrapper'
 subprocess.run([
     str(Path.home() / 'arm-linux-musleabi-cross/bin/arm-linux-musleabi-gcc'),
     '-static', '-Os', '-s', '-march=armv7-a', '-mfloat-abi=soft',
-    '-Wall', '-Wextra', str(DEVICE / 'tools/boot-kmsg-init.c'), '-o', str(wrapper),
+    '-Wall', '-Wextra', '-Werror', f'-DS17_BOOTLOG_TAG="{args.tag}"',
+    str(DEVICE / 'tools/boot-kmsg-init.c'), '-o', str(wrapper),
 ], check=True)
 
 if args.input:
@@ -41,6 +48,17 @@ else:
         '--dtb_offset', '0x07808000', '--os_version', '12.0.0', '--os_patch_level', '2024-03',
         '--cmdline', 'bootopt=64S3,32N2,64N2 buildvariant=user loglevel=8',
     ]
+if args.permissive:
+    kernel_data = Path(flags[flags.index('--kernel') + 1]).read_bytes()
+    if kernel_data.startswith(b'\x1f\x8b'):
+        kernel_data = gzip.decompress(kernel_data)
+    start = kernel_data.find(b'IKCFG_ST')
+    end = kernel_data.find(b'IKCFG_ED', start + 8)
+    if start < 0 or end < 0:
+        parser.error('permissive mode requires a verifiable embedded kernel config')
+    config = gzip.decompress(kernel_data[start + 8:end]).decode()
+    if 'CONFIG_SECURITY_SELINUX_DEVELOP=y\n' not in config:
+        parser.error('rebuild kernel with CONFIG_SECURITY_SELINUX_DEVELOP=y first')
 raw = gzip.decompress(ramdisk_input.read_bytes())
 entries, offset = [], 0
 while True:
@@ -81,7 +99,13 @@ cmdline_idx = flags.index('--cmdline') + 1
 # Retain the base image's blacklist and diagnostics, replace only these switches.
 cmdline = [word for word in flags[cmdline_idx].split()
            if not word.startswith(('printk.disable_uart=', 'printk.devkmsg=', 's17.bootlog='))]
-flags[cmdline_idx] = ' '.join(cmdline + ['printk.disable_uart=0', 'printk.devkmsg=on', 's17.bootlog=r8'])
+if args.permissive:
+    cmdline = [word for word in cmdline
+               if not word.startswith(('enforcing=', 'androidboot.selinux='))]
+    # Keep the collector alive at the instant policy loads, before init applies its setting.
+    cmdline += ['enforcing=0', 'androidboot.selinux=permissive']
+flags[cmdline_idx] = ' '.join(cmdline + ['printk.disable_uart=0', 'printk.devkmsg=on',
+                                      f's17.bootlog={args.tag}'])
 subprocess.run([
     'python3', str(LINEAGE / 'system/tools/mkbootimg/mkbootimg.py'),
     *flags, '--output', str(image),

@@ -12,6 +12,10 @@
 #include <time.h>
 #include <unistd.h>
 
+#ifndef S17_BOOTLOG_TAG
+#define S17_BOOTLOG_TAG "r8"
+#endif
+
 static long milliseconds(void) {
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
@@ -52,13 +56,13 @@ static void collect(int kmsg, int test, int service) {
                         : "/mnt/s17-bootlog/s17-early-kmsg.log",
                    O_WRONLY | O_CREAT | O_TRUNC, 0600);
     if (out < 0) { perror("collector: open log"); _exit(4); }
-    const char *tag = service ? "S17 rc kmsg collector r8\n"
-                              : "S17 early kmsg collector r8; original init is PID 1\n";
+    const char *tag = service ? "S17 rc kmsg collector " S17_BOOTLOG_TAG "\n"
+                              : "S17 early kmsg collector " S17_BOOTLOG_TAG "; original init is PID 1\n";
     write(out, tag, strlen(tag));
     fsync(out);
     lseek(kmsg, 0, SEEK_SET);
     long last_sync = milliseconds();
-    long end = last_sync + (test ? 1000 : service ? 300000 : 30000);
+    long end = last_sync + (test ? 1000 : service ? 300000 : 120000);
     char buffer[16384];
     while (milliseconds() < end) {
         struct pollfd fd = {.fd = kmsg, .events = POLLIN};
