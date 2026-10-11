@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0 -->
+<resources>
+    <string name="power_profile_title">电源方案</string>
+    <string name="power_profile_summary">选择省电、平衡或高性能模式</string>
+    <string name="power_profile_save">省电</string>
+    <string name="power_profile_balanced">平衡</string>
+    <string name="power_profile_performance">高性能</string>
+    <string name="power_profile_description">省电模式降低处理器最高频率，平衡模式允许更高的处理器频率。高性能模式取消电源方案的处理器限频，可能增加耗电和发热。所有模式均保留动态调频和温控保护。</string>
+    <string name="power_profile_error">无法切换电源方案</string>
+</resources>

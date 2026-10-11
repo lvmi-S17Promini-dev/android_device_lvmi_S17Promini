@@ -1,1 +1,2 @@
 genfscon sysfs /devices/platform/leds-mt65xx/leds/lcd-backlight/brightness u:object_r:sysfs_s17_backlight:s0
+genfscon proc /ppm/policy/hard_userlimit_max_cpu_freq u:object_r:proc_s17_power_profile:s0

@@ -1,0 +1,27 @@
+# The stock MTK HAL uses USER_LIMIT for boosts; profiles use HARD_USER_LIMIT.
+# Cluster 0 = policy0 (fast cores), cluster 1 = policy4 (slow cores), kHz.
+# Keep both minimum frequencies unconstrained. -1 removes our maximum limit.
+# Property actions run after persistent properties load and on every change.
+on property:persist.sys.s17.power_profile=power_save
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "0 1617000"
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "1 1226000"
+
+on property:persist.sys.s17.power_profile=balanced
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "0 2009000"
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "1 1491000"
+
+on property:persist.sys.s17.power_profile=performance
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "0 -1"
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "1 -1"
+
+on property:sys.boot_completed=1 && property:persist.sys.s17.power_profile=power_save
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "0 1617000"
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "1 1226000"
+
+on property:sys.boot_completed=1 && property:persist.sys.s17.power_profile=balanced
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "0 2009000"
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "1 1491000"
+
+on property:sys.boot_completed=1 && property:persist.sys.s17.power_profile=performance
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "0 -1"
+    write /proc/ppm/policy/hard_userlimit_max_cpu_freq "1 -1"

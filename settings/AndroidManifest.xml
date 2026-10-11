@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lvmi.s17settings">
+    <application android:label="@string/power_profile_title"
+        android:allowBackup="false" android:theme="@style/Theme.SubSettingsBase">
+        <activity android:name=".power.PowerProfileSettingsActivity"
+            android:label="@string/power_profile_title" android:exported="true"
+            android:permission="android.permission.DEVICE_POWER">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.battery" />
+            <meta-data android:name="com.android.settings.summary"
+                android:resource="@string/power_profile_summary" />
+        </activity>
+    </application>
+</manifest>

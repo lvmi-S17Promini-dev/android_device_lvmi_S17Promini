@@ -1,0 +1,9 @@
+# Keep profile selection in the actual, package-specific settings app domain.
+type s17_devicesettings_app, domain, coredomain;
+app_domain(s17_devicesettings_app)
+system_internal_prop(s17_power_profile_prop)
+set_prop(s17_devicesettings_app, s17_power_profile_prop)
+
+# Init alone applies profiles; the UI has no writable CPU/proc access.
+type proc_s17_power_profile, fs_type, proc_type;
+allow init proc_s17_power_profile:file rw_file_perms;

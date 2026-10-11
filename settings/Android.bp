@@ -1,0 +1,13 @@
+android_app {
+    name: "S17DeviceSettings",
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+    platform_apis: true,
+    certificate: "platform",
+    system_ext_specific: true,
+    static_libs: [
+        "androidx.preference_preference",
+        "SettingsLibCollapsingToolbarBaseActivity",
+    ],
+    optimize: { enabled: false },
+}

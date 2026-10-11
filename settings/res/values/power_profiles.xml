@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0 -->
+<resources>
+    <string name="power_profile_title">Power profile</string>
+    <string name="power_profile_summary">Choose power saving, balanced, or performance</string>
+    <string name="power_profile_save">Power saving</string>
+    <string name="power_profile_balanced">Balanced</string>
+    <string name="power_profile_performance">Performance</string>
+    <string name="power_profile_description">Power saving lowers the maximum CPU frequencies. Balanced allows higher CPU frequencies. Performance removes the profile CPU limits and may increase power use and heat. CPU frequency scaling and thermal protection remain enabled in all profiles.</string>
+    <string name="power_profile_error">Could not change the power profile</string>
+    <string-array name="power_profile_entries">
+        <item>@string/power_profile_save</item>
+        <item>@string/power_profile_balanced</item>
+        <item>@string/power_profile_performance</item>
+    </string-array>
+    <string-array name="power_profile_values" translatable="false">
+        <item>power_save</item>
+        <item>balanced</item>
+        <item>performance</item>
+    </string-array>
+</resources>

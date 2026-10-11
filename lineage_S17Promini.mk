@@ -64,3 +64,9 @@ PRODUCT_COPY_FILES += \
     device/lvmi/S17Promini/rootdir/init.s17promini-charger-adb.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/init.s17promini-charger-adb.rc \
     device/lvmi/S17Promini/rootdir/init.s17promini-bootlog.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/init.s17promini-bootlog.rc
 endif
+
+# Device power profiles (normal ROM only).
+PRODUCT_PACKAGES += S17DeviceSettings
+PRODUCT_SYSTEM_PROPERTIES += persist.sys.s17.power_profile=balanced
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/init.s17-power-profiles.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/init.s17-power-profiles.rc
