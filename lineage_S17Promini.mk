@@ -19,6 +19,9 @@ $(call inherit-product, vendor/lvmi/S17Promini/S17Promini-vendor.mk)
 PRODUCT_PACKAGES += \
     Dialer
 
+$(call inherit-product, device/lvmi/S17Promini/ims/ims.mk)
+LOCAL_PATH := device/lvmi/S17Promini
+
 # Product identity
 PRODUCT_NAME := lineage_S17Promini
 

@@ -1,0 +1,2 @@
+# The platform-signed IMS app runs as android.uid.phone in the radio domain.
+mtkIms                                    u:object_r:radio_service:s0

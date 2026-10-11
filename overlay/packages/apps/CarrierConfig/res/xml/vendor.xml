@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carrier_config_list>
+    <!-- The test SIM uses China Unicom 46001. Keep other carriers' defaults. -->
+    <carrier_config mcc="460" mnc="01">
+        <boolean name="carrier_volte_available_bool" value="true" />
+    </carrier_config>
+</carrier_config_list>

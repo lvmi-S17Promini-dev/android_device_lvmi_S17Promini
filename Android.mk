@@ -1,6 +1,19 @@
 LOCAL_PATH := $(call my-dir)
 
 ifeq ($(TARGET_PRODUCT),lineage_S17Promini)
+include $(CLEAR_VARS)
+LOCAL_MODULE := S17ImsService
+LOCAL_MODULE_CLASS := APPS
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
+LOCAL_PREBUILT_MODULE_FILE := vendor/lvmi/S17Promini/ims/ImsService.apk
+LOCAL_CERTIFICATE := platform
+LOCAL_PRIVILEGED_MODULE := true
+LOCAL_DEX_PREOPT := false
+# Stock optional operator/WFO libraries are not needed by this voice IMS app.
+LOCAL_ENFORCE_USES_LIBRARIES := false
+include $(BUILD_PREBUILT)
+
 # Device init owns the boot flow. Keep GSI compatibility libraries without
 # installing the GSI-only version import or unconditional nodef reboot guard.
 include $(CLEAR_VARS)
