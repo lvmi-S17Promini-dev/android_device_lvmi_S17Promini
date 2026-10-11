@@ -1,5 +1,7 @@
 # 触摸输入采集复核（2026-10-05）
 
+> 2026-10-11 更新：用户确认 OSS 内核 recovery 触摸已修复；下文保留当时的 prebuilt/测试状态。旧自动固件刷写失败的补充说明见 [修复确认](95-recovery-touch-fixed.md)。
+
 用户确认执行 getevent -lt 后触摸数秒，文件已放 recovery-debug。原始导出为 UTF-16，已转换 UTF-8 存入 normalized，原件保留。
 
 ## 结果

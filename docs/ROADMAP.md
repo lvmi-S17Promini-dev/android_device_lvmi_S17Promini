@@ -76,7 +76,7 @@
 
 - prebuilt kernel 和闭源 HAL 本身不阻碍成熟化，原厂组件必须配套，不强求无源码内核重写。
 - stock first-stage ramdisk、融合 product/system_ext 可以继续保留；若以后修改，只处理有明确收益的部分。
-- recovery 触摸按用户要求暂缓。
+- recovery 触摸已由 OSS 内核修复，2026-10-11 用户确认；见 [修复记录](95-recovery-touch-fixed.md)。
 - Android 升级、增量 OTA、自动更新服务、公开发布及发布密钥切换不在本轮范围，另行确定需求。
 
 ## 推进方式

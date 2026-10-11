@@ -1,5 +1,7 @@
 # Vendor blob 清单与后续清理（2026-10-06）
 
+> 2026-10-11 更新：用户确认 OSS 内核 recovery 触摸已修复；下文保留当时的 prebuilt/测试状态。旧自动固件刷写失败的补充说明见 [修复确认](95-recovery-touch-fixed.md)。
+
 下一阶段改为整理原厂 vendor；本轮仅列清单，不删文件、不构建、不刷写。recovery 触摸暂缓。
 
 来源：`~/S17Promini_LineageOS/extracted/filesystems/vendor`，原始 stock vendor 镜像解包目录。odm 嵌在 vendor 中，已纳入。

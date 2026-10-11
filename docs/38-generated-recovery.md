@@ -1,5 +1,7 @@
 # ROM recovery 改为源码生成（2026-10-06）
 
+> 2026-10-11 更新：用户确认 OSS 内核 recovery 触摸已修复；下文保留当时的 prebuilt/测试状态。旧自动固件刷写失败的补充说明见 [修复确认](95-recovery-touch-fixed.md)。
+
 按用户要求，正式 ROM 不再固定 prebuilt r5 recovery。删除 BOARD_PREBUILT_RECOVERYIMAGE 和 DT 的 prebuilt/recovery.img；原 r5 仅在工作目录 artifacts 中作为历史基线保存。正式目标和独立 recovery 目标都使用 in-tree recovery 构建。
 
 正常 boot 仍使用已验证 stock first-stage ramdisk；为避免 BOARD_MKBOOTIMG_ARGS 的 --ramdisk stock 参数覆盖 recovery，ROM 单独设置 BOARD_RECOVERY_MKBOOTIMG_ARGS，仅包含 header/offset/DTB/OS/SPL，recovery 的 ramdisk 由源码生成。内核继续 prebuilt。

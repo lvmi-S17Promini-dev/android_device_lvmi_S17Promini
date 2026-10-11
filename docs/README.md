@@ -2,7 +2,7 @@
 
 后续计划：[设备树成熟化 Roadmap](ROADMAP.md)（固定 LineageOS 19.1；vendor 模块迁移暂缓）。
 
-当前已验证基线：LineageOS 19.1 system、原厂 prebuilt kernel/first-stage ramdisk 的正常 boot、源码生成 recovery、从展开 blob 重建的清理版 vendor，以及非 A/B 全量安装 zip r3。用户确认 recovery 安装完成、开机成功、基本功能正常，调试 ADB 符合需求。Git 标记 `lineage-r3-validated`；recovery 触摸暂缓，安装 zip r1/r2 停用。
+当前已验证基线：LineageOS 19.1 system、原厂 prebuilt kernel/first-stage ramdisk 的正常 boot、源码生成 recovery、从展开 blob 重建的清理版 vendor，以及非 A/B 全量安装 zip r3。用户确认 recovery 安装完成、开机成功、基本功能正常，调试 ADB 符合需求。Git 标记 `lineage-r3-validated`；recovery 触摸已由 OSS 内核修复（2026-10-11 用户确认），安装 zip r1/r2 停用。
 
 正式构建：`lunch lineage_S17Promini-userdebug` 后 `m -j8 bacon`；独立 recovery：`lunch lineage_S17Promini_recovery-userdebug` 后 `m recoveryimage`。已验证安装包位于工作目录 `artifacts/rom-install-r3/lineage-19.1-S17Promini-r3.zip`；原 r3 保留作为已验证基线；标准 target-files/全量 OTA 已接入、构建通过，用户确认正式包刷入正常，详见 37 号文档。增量 OTA 本轮未处理。
 
@@ -24,7 +24,7 @@
 
 - [Recovery 日志复核与下一步](08-recovery-log-review.md)
 
-- [触摸输入事件复核](09-touch-input-review.md)：节点已注册，触摸时无事件；fastbootd 输出待补。
+- [触摸输入事件复核](09-touch-input-review.md)：历史 prebuilt recovery 无触摸事件；OSS recovery 已修复，见 95 号记录。
 
 - [fastbootd 找不到 system 与 r3 修复](10-fastbootd-super.md)
 
@@ -51,7 +51,7 @@
 
 2026-10-06：system-only LineageOS 19.1 首次成功启动进入系统，用户确认扬声器、相机、Wi-Fi 正常。对应 DT 提交 `4fe5fad`；暂保留当前可启动镜像作为后续调试基线。
 
-- [Vendor blob 清单与后续清理](27-vendor-blobs.md)：完整原厂文件/符号链接清单已生成，预装 APK 已列出；仅记录，尚未清理或构建 vendor。补充实测蓝牙、麦克风、充电、按键唤醒、Doze 正常，recovery 触摸暂缓。
+- [Vendor blob 清单与后续清理](27-vendor-blobs.md)：完整原厂文件/符号链接清单已生成，预装 APK 已列出；仅记录，尚未清理或构建 vendor。补充实测蓝牙、麦克风、充电、按键唤醒、Doze 正常，recovery 触摸已由 OSS 内核修复（2026-10-11 用户确认）。
 
 - [Vendor 预装 APK 清理](28-vendor-apk-pruning.md)：删除 6 个应用及专用库/预优化文件，保留 15 个资源 overlay；手机端待后续 vendor 镜像刷入。
 
@@ -95,3 +95,5 @@
 - [补齐拨号应用](47-dialer.md)
 
 - [振动分类控制入口](48-vibration-controls.md)：声音页面增加分类开关入口，强度调节与全局关闭暂不实现。
+
+- [Recovery 触摸修复确认](95-recovery-touch-fixed.md)：OSS 内核实测触摸正常，补充旧固件刷写失败原因。

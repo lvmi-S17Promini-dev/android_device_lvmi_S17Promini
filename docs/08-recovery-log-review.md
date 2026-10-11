@@ -1,5 +1,7 @@
 # Recovery 日志复核（2026-10-05）
 
+> 2026-10-11 更新：用户确认 OSS 内核 recovery 触摸已修复；下文保留当时的 prebuilt/测试状态。旧自动固件刷写失败的补充说明见 [修复确认](95-recovery-touch-fixed.md)。
+
 输入：`recovery-debug/misc.txt`、`recovery.log`、`recovery-dmesg.txt`。保留原文件，归一化与摘要放 `recovery-debug/normalized/`。PowerShell 导出的 dmesg 是 UTF-16 LE；直接 rg 会漏掉匹配，因此先转换 UTF-8。
 
 ## 已验收

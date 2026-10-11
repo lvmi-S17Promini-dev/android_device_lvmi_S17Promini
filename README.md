@@ -16,7 +16,7 @@ The ROM, source-built recovery, vendor image and standard non-A/B OTA build are 
 
 ## Implementation
 
-- Stock kernel, DTB and recovery DTBO are prebuilt; kernel source is unavailable.
+- The current bring-up builds the OSS kernel and board DTB from source; recovery DTBO remains stock prebuilt.
 - Normal boot retains the tested stock first-stage ramdisk. Recovery is built from current sources.
 - Proprietary files are extracted into `vendor/lvmi/S17Promini/proprietary/vendor/`.
   The current vendor image builder preserves stock ownership, permissions, SELinux labels and symlinks.
@@ -78,7 +78,7 @@ Device boot, recovery, ADB, fastbootd, standard OTA installation, data-preservin
 and clean installation have been verified. Reported working functions include RIL, Wi-Fi,
 Bluetooth, camera, audio, microphone, charging, key wake-up and Doze.
 
-Recovery touch is deferred; use the physical keys. Recovery decryption of encrypted data
+Recovery touch works with the OSS kernel (confirmed on 2026-10-11). Recovery decryption of encrypted data
 has not been validated. Vendor still uses a custom filesystem build rule and stock policy;
 conversion to conventional prebuilt modules is deferred. Incremental OTA and automatic update
 service integration are outside the current scope.
@@ -91,3 +91,5 @@ service integration are outside the current scope.
 - [Porting records](docs/README.md), [standard build details](docs/37-standard-build-targets.md)
   and [source-built recovery](docs/38-generated-recovery.md).
 - [Maturation roadmap](docs/ROADMAP.md): future work on the fixed LineageOS 19.1 version.
+
+See [the recovery touch update](docs/95-recovery-touch-fixed.md) for the historical prebuilt firmware failure.
