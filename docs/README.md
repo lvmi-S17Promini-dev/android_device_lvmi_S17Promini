@@ -2,6 +2,10 @@
 
 后续计划：[设备树成熟化 Roadmap](ROADMAP.md)（固定 LineageOS 19.1；vendor 模块迁移暂缓）。
 
+源码内核相机：[IMX278 移植](103-imx278-camera-port.md)。GitHub 驱动按原厂寄存器、裁剪、增益及上电表校准，主摄源码已接入。
+
+相机复测：[GC5025sub 板级修正与验收](104-camera-front-gc5025sub-stock.md)。用户确认 r13 修复相机，并纠正之前默认打开的是副摄；本次相机修复已实机通过。
+
 当前已验证基线：LineageOS 19.1 system、原厂 prebuilt kernel/first-stage ramdisk 的正常 boot、源码生成 recovery、从展开 blob 重建的清理版 vendor，以及非 A/B 全量安装 zip r3。用户确认 recovery 安装完成、开机成功、基本功能正常，调试 ADB 符合需求。Git 标记 `lineage-r3-validated`；recovery 触摸已由 OSS 内核修复（2026-10-11 用户确认），安装 zip r1/r2 停用。
 
 正式构建：`lunch lineage_S17Promini-userdebug` 后 `m -j8 bacon`；独立 recovery：`lunch lineage_S17Promini_recovery-userdebug` 后 `m recoveryimage`。已验证安装包位于工作目录 `artifacts/rom-install-r3/lineage-19.1-S17Promini-r3.zip`；原 r3 保留作为已验证基线；标准 target-files/全量 OTA 已接入、构建通过，用户确认正式包刷入正常，详见 37 号文档。增量 OTA 本轮未处理。
