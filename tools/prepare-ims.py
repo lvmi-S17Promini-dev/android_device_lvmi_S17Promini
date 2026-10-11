@@ -61,6 +61,26 @@ def prepare(stock):
         if count != 1:
             raise ValueError("Stock IMS video capability gate changed")
         util.write_text(body)
+        # The call-session constructor and video ringtone path independently
+        # check the persisted vendor property, which is 1 in stock. Even audio
+        # calls then create/bind a VTProvider and call its unloaded JNI. Route
+        # both checks through the same gate used by native video initialization.
+        session = app / "com/mediatek/ims/ImsCallSessionProxy.smali"
+        video_check = (
+            r'(?m)^    const-string (?P<reg>v\d+), "persist.vendor.vilte_support"\n\n'
+            r'    invoke-static \{(?P=reg)\}, Landroid/os/SystemProperties;->get\(Ljava/lang/String;\)Ljava/lang/String;\n\n'
+            r'    move-result-object (?P=reg)\n\n'
+            r'    const-string (?P<one>v\d+), "1"\n\n'
+            r'    invoke-virtual \{(?P=reg), (?P=one)\}, Ljava/lang/String;->equals\(Ljava/lang/Object;\)Z\n\n'
+            r'    move-result (?P=reg)')
+        body, count = re.subn(
+            video_check,
+            lambda match: "    invoke-static {}, Lcom/mediatek/ims/internal/ImsVTProviderUtil;->isVideoCallOnByPlatform()Z\n\n"
+                          + "    move-result " + match["reg"],
+            session.read_text())
+        if count != 2:
+            raise ValueError("Stock IMS call-session video gates changed")
+        session.write_text(body)
         dex = work / "classes.dex"
         subprocess.run([str(java), "-jar", str(smali / "smali.jar"),
                         "a", str(app), "-o", str(dex)], check=True)
@@ -78,6 +98,9 @@ def prepare(stock):
         shutil.copyfile(apk, VENDOR / apk.name)
         report = {"inputs": manifest["inputs"], "bundled_classes": bundled,
                   "video_enabled": False,
+                  "video_gate_patches": ["ImsVTProviderUtil.isVideoCallOnByPlatform",
+                                         "ImsCallSessionProxy.<init>",
+                                         "ImsCallSessionProxy.updateOutgoingVideoRingtone"],
                   "apk_sha256": hashlib.sha256(apk.read_bytes()).hexdigest()}
         (VENDOR / "provenance.json").write_text(json.dumps(report, indent=2) + "\n")
         print(f"Prepared {VENDOR / apk.name}: {len(bundled)} private MTK dependency classes")

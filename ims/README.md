@@ -30,7 +30,9 @@ required privileged permission whitelist. Provisioning checks are not forcibly
 bypassed.
 
 Video IMS is gated off in the APK because the stock eagerly initialized JNI
-video stack is not part of this voice bring-up. Framework ViLTE/VoWiFi flags
+video stack is not part of this voice bring-up. The call-session constructor
+and video ringtone path use the same gate, so audio calls do not create/bind
+a video provider based on stock persist.vendor.vilte_support=1. Framework ViLTE/VoWiFi flags
 remain off. SMS IMS uses the original app implementation. Registration, calls,
 SMS and LTE incoming behavior still require device testing; a successful ROM
 build does not validate the modem or operator interaction.
