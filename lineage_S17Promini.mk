@@ -15,9 +15,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_release.mk)
 $(call inherit-product, vendor/lvmi/S17Promini/S17Promini-vendor.mk)
 
 # Telephony
-# common_full_phone supplies messaging and Stk, but not the AOSP Dialer.
+# common_full_phone supplies messaging and Stk, but not Dialer or CarrierConfig.
+# CarrierConfig hosts the carrier XML overlay used to enable voice IMS.
 PRODUCT_PACKAGES += \
-    Dialer
+    Dialer \
+    CarrierConfig
 
 $(call inherit-product, device/lvmi/S17Promini/ims/ims.mk)
 LOCAL_PATH := device/lvmi/S17Promini

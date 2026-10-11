@@ -23,7 +23,11 @@ stock framework replacements or additions to the platform boot classpath.
 The stock manifest already declares the Android 12 MMTEL ImsService. Device
 overlays select it and advertise VoLTE; the carrier overlay enables VoLTE for
 the test SIM's China Unicom MCC/MNC 46001. Other carriers keep their existing
-CarrierConfig. Provisioning checks are not forcibly bypassed.
+CarrierConfig. The ROM explicitly includes the AOSP CarrierConfig app: without
+it, its XML overlay is not packaged, the framework falls back to VoLTE-disabled
+defaults, and ImsManager turns IMS off. CarrierConfig also installs its own
+required privileged permission whitelist. Provisioning checks are not forcibly
+bypassed.
 
 Video IMS is gated off in the APK because the stock eagerly initialized JNI
 video stack is not part of this voice bring-up. Framework ViLTE/VoWiFi flags
