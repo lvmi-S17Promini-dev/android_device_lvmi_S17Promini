@@ -1,6 +1,19 @@
 LOCAL_PATH := $(call my-dir)
 
 ifeq ($(TARGET_PRODUCT),lineage_S17Promini)
+s17_ims_permission_check := $(call intermediates-dir-for,APPS,S17ImsService)/permissions-checked.stamp
+$(s17_ims_permission_check): vendor/lvmi/S17Promini/ims/ImsService.apk \
+    $(LOCAL_PATH)/tools/check-ims-permissions.py \
+    $(LOCAL_PATH)/ims/privapp-permissions-s17-ims.xml \
+    frameworks/base/core/res/AndroidManifest.xml $(HOST_OUT_EXECUTABLES)/aapt2
+	python3 device/lvmi/S17Promini/tools/check-ims-permissions.py \
+	    --aapt2 $(HOST_OUT_EXECUTABLES)/aapt2 \
+	    --apk vendor/lvmi/S17Promini/ims/ImsService.apk \
+	    --manifest frameworks/base/core/res/AndroidManifest.xml \
+	    --allowlist device/lvmi/S17Promini/ims/privapp-permissions-s17-ims.xml
+	mkdir -p $(dir $@)
+	touch $@
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := S17ImsService
 LOCAL_MODULE_CLASS := APPS
@@ -10,6 +23,7 @@ LOCAL_PREBUILT_MODULE_FILE := vendor/lvmi/S17Promini/ims/ImsService.apk
 LOCAL_CERTIFICATE := platform
 LOCAL_PRIVILEGED_MODULE := true
 LOCAL_DEX_PREOPT := false
+LOCAL_ADDITIONAL_DEPENDENCIES := $(s17_ims_permission_check)
 # Stock optional operator/WFO libraries are not needed by this voice IMS app.
 LOCAL_ENFORCE_USES_LIBRARIES := false
 include $(BUILD_PREBUILT)

@@ -31,6 +31,13 @@ remain off. SMS IMS uses the original app implementation. Registration, calls,
 SMS and LTE incoming behavior still require device testing; a successful ROM
 build does not validate the modem or operator interaction.
 
+The initial allowlist omitted PACKET_KEEPALIVE_OFFLOAD and caused system_server
+to abort during the privileged permission check. It is now included. Packaging
+S17ImsService runs tools/check-ims-permissions.py against the APK and the
+platform permission definitions to reject missing privileged entries before
+producing another image. The corrected allowlist covers all five platform
+privileged permissions requested by this APK.
+
 After installation, check `pm path com.mediatek.ims`, `dumpsys phone` for an
 active ImsResolver controller, and radio/all logcat for ImsApp/MtkDynamicImsService
 startup. Then check actual IMS registration and a call that stays on LTE.
