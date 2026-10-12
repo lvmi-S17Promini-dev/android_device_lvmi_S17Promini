@@ -29,6 +29,8 @@ PRODUCT_NAME := lineage_S17Promini
 
 # Device overlays: camera key/wake options and the sound vibration controls.
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+# Battery attribution estimates must override the stock vendor's placeholder RRO.
+PRODUCT_PACKAGES += S17PowerProfileOverlay
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/mtk-kpd.kl:$(TARGET_COPY_OUT_SYSTEM)/usr/keylayout/mtk-kpd.kl
 

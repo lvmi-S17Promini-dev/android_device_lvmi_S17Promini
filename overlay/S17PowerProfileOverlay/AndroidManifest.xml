@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lvmi.s17.overlay.powerprofile"
+    android:versionCode="1"
+    android:versionName="1.0">
+    <application android:hasCode="false" />
+    <!-- Stock vendor FrameworkResOverlay has priority 1 and placeholder power values.
+         Use a product RRO so it also wins when partition ordering is configured. -->
+    <overlay android:targetPackage="android"
+        android:isStatic="true"
+        android:priority="999" />
+</manifest>

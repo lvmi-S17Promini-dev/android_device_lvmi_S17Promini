@@ -101,3 +101,5 @@
 - [振动分类控制入口](48-vibration-controls.md)：声音页面增加分类开关入口，强度调节与全局关闭暂不实现。
 
 - [Recovery 触摸修复确认](95-recovery-touch-fixed.md)：OSS 内核实测触摸正常，补充旧固件刷写失败原因。
+
+- [电池耗电归因估算表](116-battery-attribution-profile.md)：参考同平台 CPU 和小屏 LCD 功耗，覆盖原厂占位表，附构建产物及刷机后验证方法。
